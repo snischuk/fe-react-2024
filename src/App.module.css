@@ -1,0 +1,29 @@
+@import "./assets/fonts/Montserrat/fonts.css";
+
+:root {
+  --red-main: #EF4934;
+  --red-hover: #D43824;
+  --darkest-grey: #111;
+  --white: #FFF;
+  --grey-1: #333;
+  --grey-2: #585858;
+  --grey-3: #CCC;
+  --grey-4: #E1E1E1;
+  --grey-hover: #F1F1F1;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  display: flex;
+  flex-direction: column;
+  background: var(--darkest-grey);
+  font-family: "Montserrat", sans-serif;
+  font-style: normal;
+  font-weight: 400;
+  font-size: 16px;
+}
