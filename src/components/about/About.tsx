@@ -2,7 +2,7 @@ import aboutImage from '@/assets/images/about/about-main.jpeg';
 
 import styles from './about.module.css';
 
-function AboutComponent() {
+function About() {
     return (
         <div className={styles.about}>
             <img className={styles.about__image} src={aboutImage} width="552" height="777" alt="Awesome product" />
@@ -44,4 +44,4 @@ function AboutComponent() {
     );
 }
 
-export { AboutComponent };
+export { About };

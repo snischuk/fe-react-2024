@@ -1,14 +1,14 @@
-import { AboutComponent } from './components/about/About.component.tsx';
-import { HeaderComponent } from './components/header/Header.component.tsx';
+import { About } from './components/about/About.tsx';
+import { Header } from './components/header/Header.tsx';
 
 import styles from './app.module.css';
 
 function App() {
     return (
         <>
-            <HeaderComponent />
+            <Header />
             <main className={styles.home}>
-                <AboutComponent />
+                <About />
             </main>
         </>
     );
