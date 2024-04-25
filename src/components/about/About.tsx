@@ -4,7 +4,7 @@ import styles from './about.module.css';
 
 function About() {
     return (
-        <div className={styles.about}>
+        <article className={styles.about}>
             <img className={styles.about__image} src={aboutImage} width="552" height="777" alt="Awesome product" />
             <div className={styles.about__content}>
                 <h1 className={styles.about__title}>About me</h1>
@@ -40,7 +40,7 @@ function About() {
                     .
                 </p>
             </div>
-        </div>
+        </article>
     );
 }
 
