@@ -1,7 +1,7 @@
 import { AboutComponent } from './components/about/About.component.tsx';
 import { HeaderComponent } from './components/header/Header.component.tsx';
 
-import styles from './App.module.css';
+import styles from './app.module.css';
 
 function App() {
     return (
