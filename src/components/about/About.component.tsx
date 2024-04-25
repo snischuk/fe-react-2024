@@ -13,7 +13,16 @@ function AboutComponent() {
                     React, HTML, CSS, JavaScript and Git version control system.
                 </p>
                 <p className={styles.about__description}>
-                    This page was developed during the course &apos;Intro to React&apos; from Masters Academy in 2024.
+                    This page was developed during the course{' '}
+                    <a
+                        className={styles.about__link}
+                        href="https://www.mastersacademy.education/frontend-for-beginners-it"
+                        target="_blank"
+                        rel="noreferrer"
+                    >
+                        &apos;Intro to React&apos;
+                    </a>{' '}
+                    from Masters Academy in 2024.
                 </p>
                 <p className={styles.about__description}>
                     This is a social project from MOCG company where I got an opportunity to work with Frontend mentors and to create my own

@@ -32,6 +32,7 @@
 }
 
 .about__link {
+  text-decoration: underline;
   color: var(--white);
   line-height: 32px;
   transition: .3s color ease-in-out;
