@@ -85,8 +85,15 @@
   color: var(--white);
   font-size: 16px;
   font-weight: 500;
-  background-color: var(--grey-1);
   transition: .3s background-color ease-in-out;
+}
+
+.headerAuthBtnDark {
+  background-color: var(--grey-1);
+}
+
+.headerAuthBtnAccent {
+  background-color: var(--red-main);
 }
 
 @media (any-hover: hover) {
@@ -103,8 +110,12 @@
     stroke-width: 2px;
   }
 
-  .headerAuthBtn:hover {
+  .headerAuthBtnDark:hover {
     background-color: var(--grey-2);
+  }
+
+  .headerAuthBtnAccent:hover {
+    background-color: var(--red-hover);
   }
 
   .headerBurgerBtn:hover .headerBurgerIcon path {

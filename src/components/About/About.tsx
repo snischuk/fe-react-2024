@@ -1,6 +1,6 @@
 import aboutImage from '@/assets/images/about/about-main.jpeg';
 
-import styles from './About.module.css';
+import styles from './about.module.css';
 
 function About() {
     return (
