@@ -1,6 +1,6 @@
-import { About } from './components/About/About';
-import { Footer } from './components/Footer/Footer';
-import { Header } from './components/Header/Header';
+import { About } from './components/About/About.tsx';
+import { Footer } from './components/Footer/Footer.tsx';
+import { Header } from './components/Header/Header.tsx';
 
 import styles from './app.module.css';
 
