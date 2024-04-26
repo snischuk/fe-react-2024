@@ -1,15 +1,15 @@
-import { About } from './components/about/About.tsx';
-import { Header } from './components/header/Header.tsx';
-
-import styles from './app.module.css';
+import { About } from './components/About/About';
+import { Footer } from './components/Footer/Footer';
+import { Header } from './components/Header/Header';
 
 function App() {
     return (
         <>
             <Header />
-            <main className={styles.home}>
+            <main>
                 <About />
             </main>
+            <Footer />
         </>
     );
 }
