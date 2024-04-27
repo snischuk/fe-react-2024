@@ -57,7 +57,7 @@ function Header() {
                 </div>
 
                 <div className={styles.headerPageLinks}>
-                    <a className={styles.headerPageLink} href="#about">
+                    <a className={[styles.headerPageLink, styles.headerPageLinkActive].join(' ')} href="#about">
                         About
                     </a>
                     <a className={styles.headerPageLink} href="#products">

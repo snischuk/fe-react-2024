@@ -38,6 +38,10 @@
   transition: .3s stroke ease-in-out;
 }
 
+.headerThemeModeBtn.headerThemeModeBtnActive {
+  pointer-events: none;
+}
+
 .headerThemeModeBtn.headerThemeModeBtnActive .headerThemeModeBtnIcon {
   stroke: var(--white);
 }
@@ -68,6 +72,11 @@
   color: var(--white);
   font-weight: 500;
   transition: .3s font-weight ease-in-out;
+}
+
+.headerPageLink.headerPageLinkActive {
+  pointer-events: none;
+  font-weight: 700;
 }
 
 .headerAuthBtns {
