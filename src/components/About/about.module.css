@@ -4,7 +4,7 @@
   background-color: var(--darkest-grey);
 }
 
-.about__container {
+.aboutContainer {
   max-width: 1280px;
   padding: 30px 0 40px;
   margin: 0 auto;
@@ -13,31 +13,31 @@
   row-gap: 30px;
 }
 
-.about__image {
+.aboutImage {
   width: 100%;
   height: 294px;
   object-fit: cover;
   border-radius: 30px;
 }
 
-.about__content {
+.aboutContent {
   width: 100%;
 }
 
-.about__title {
+.aboutTitle {
   margin: 0 0 30px;
   color: var(--white);
   font-size: 27px;
   font-weight: 600;
 }
 
-.about__description {
+.aboutDescription {
   margin: 0 0 30px;
   color: var(--white);
   font-size: 16px;
 }
 
-.about__link {
+.aboutLink {
   text-decoration: underline;
   color: var(--white);
   line-height: 32px;
@@ -46,7 +46,7 @@
 
 @media (any-hover: hover) {
 
-  .about__link:hover {
+  .aboutLink:hover {
     color: var(--red-hover);
   }
 }
@@ -57,14 +57,14 @@
     padding: 0;
   }
 
-  .about__container {
+  .aboutContainer {
     padding: 0;
     display: flex;
     flex-direction: row;
     column-gap: 100px;
   }
 
-  .about__image {
+  .aboutImage {
     order: 2;
     flex: 1 1 45%;
     min-width: 100px;
@@ -72,24 +72,24 @@
     border-radius: 0;
   }
 
-  .about__content {
+  .aboutContent {
     flex: 1 1 65%;
     min-width: 320px;
     margin: 60px 0 0 50px;
   }
 
-  .about__title {
+  .aboutTitle {
     margin: 0 0 60px;
     font-size: 36px;
     font-weight: 700;
   }
 
-  .about__description {
+  .aboutDescription {
     font-size: 22px;
     line-height: 32px;
   }
 
-  .about__description:not(:last-shild) {
+  .aboutDescription:not(:last-shild) {
     margin: 0 0 40px;
   }
 }
