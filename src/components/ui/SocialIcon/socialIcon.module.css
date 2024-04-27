@@ -1,0 +1,11 @@
+.socLink {
+  opacity: 1;
+  transition: .3s opacity ease-in-out;
+}
+
+@media (any-hover: hover) {
+
+  .socLink:hover {
+    opacity: .8;
+  }
+}

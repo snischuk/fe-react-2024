@@ -42,23 +42,10 @@
   height: 25px;
 }
 
-.footer__socLink {
-  color: var(--red-main);
-  transition: .3s color ease-in-out;
-}
-
-.footer__socIcon {
-  fill: currentcolor;
-}
-
 @media (any-hover: hover) {
 
   .footer__link:hover {
     font-weight: 600;
     line-height: 114%;
-  }
-
-  .footer__socLink:hover {
-    color: var(--red-hover);
   }
 }
