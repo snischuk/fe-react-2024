@@ -1,27 +1,30 @@
-import IconFacebook from '../../assets/images/icons/facebook.svg';
-import IconInstagram from '../../assets/images/icons/instagram.svg';
-import IconLinkedin from '../../assets/images/icons/linkedin.svg';
-import type { SocialIconProps } from '../ui/SocialIcon/SocialIcon';
+import IconFacebook from '../../assets/images/icons/facebook.svg?react';
+import IconInstagram from '../../assets/images/icons/instagram.svg?react';
+import IconLinkedin from '../../assets/images/icons/linkedin.svg?react';
 import { SocialIcon } from '../ui/SocialIcon/SocialIcon';
 
 import styles from './footer.module.css';
-
-const SOCIAL_ICONS: SocialIconProps[] = [
-    { url: 'https://www.facebook.com/', iconPath: IconFacebook },
-    { url: 'https://www.linkedin.com/', iconPath: IconLinkedin },
-    { url: 'https://www.instagram.com/', iconPath: IconInstagram },
-];
 
 function Footer() {
     return (
         <footer className={styles.footer}>
             <div className={styles.footerContainer}>
                 <ul className={styles.footerSocialList}>
-                    {SOCIAL_ICONS.map((socialIcon, index) => (
-                        <li className={styles.footerSocialItem} key={index}>
-                            <SocialIcon url={socialIcon.url} iconPath={socialIcon.iconPath} />
-                        </li>
-                    ))}
+                    <li className={styles.footerSocialItem}>
+                        <SocialIcon url="https://www.facebook.com/">
+                            <IconFacebook />
+                        </SocialIcon>
+                    </li>
+                    <li className={styles.footerSocialItem}>
+                        <SocialIcon url="https://www.linkedin.com/">
+                            <IconLinkedin />
+                        </SocialIcon>
+                    </li>
+                    <li className={styles.footerSocialItem}>
+                        <SocialIcon url="https://www.instagram.com/">
+                            <IconInstagram />
+                        </SocialIcon>
+                    </li>
                 </ul>
                 <p className={styles.footerText}>
                     Made with 💗 on course{' '}
