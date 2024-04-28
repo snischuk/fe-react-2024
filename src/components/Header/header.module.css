@@ -68,6 +68,9 @@
 }
 
 .headerPageLink {
+  min-width: 80px;
+  display: flex;
+  justify-content: center;
   text-decoration: none;
   color: var(--white);
   font-weight: 500;

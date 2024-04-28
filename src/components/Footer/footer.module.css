@@ -21,6 +21,8 @@
 }
 
 .footerLink {
+  display: inline-block;
+  min-width: 380px;
   text-decoration: none;
   color: var(--red-main);
   font-size: 16px;
