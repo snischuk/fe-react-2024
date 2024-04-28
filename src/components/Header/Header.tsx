@@ -1,3 +1,5 @@
+import { combineClasses } from '../../utils/combineClasses';
+
 import styles from './header.module.css';
 
 function Header() {
@@ -38,7 +40,7 @@ function Header() {
                         <path d="M1 0V20" stroke="#656565" />
                     </svg>
 
-                    <button className={[styles.headerThemeModeBtn, styles.headerThemeModeBtnActive].join(' ')}>
+                    <button className={combineClasses([styles.headerThemeModeBtn, styles.headerThemeModeBtnActive])}>
                         <svg
                             className={styles.headerThemeModeBtnIcon}
                             xmlns="http://www.w3.org/2000/svg"
@@ -57,7 +59,7 @@ function Header() {
                 </div>
 
                 <div className={styles.headerPageLinks}>
-                    <a className={[styles.headerPageLink, styles.headerPageLinkActive].join(' ')} href="#about">
+                    <a className={combineClasses([styles.headerPageLink, styles.headerPageLinkActive])} href="#about">
                         About
                     </a>
                     <a className={styles.headerPageLink} href="#products">
@@ -76,7 +78,7 @@ function Header() {
                 </button>
 
                 <div className={styles.headerAuthBtns}>
-                    <button className={[styles.headerAuthBtn, styles.headerAuthBtnDark].join(' ')}>
+                    <button className={combineClasses([styles.headerAuthBtn, styles.headerAuthBtnDark])}>
                         <svg
                             className={styles.headerAuthBtnIcon}
                             xmlns="http://www.w3.org/2000/svg"
@@ -96,7 +98,7 @@ function Header() {
                         Login
                     </button>
 
-                    <button className={[styles.headerAuthBtn, styles.headerAuthBtnAccent].join(' ')}>
+                    <button className={combineClasses([styles.headerAuthBtn, styles.headerAuthBtnAccent])}>
                         <svg
                             className={styles.headerAuthBtnIcon}
                             xmlns="http://www.w3.org/2000/svg"
