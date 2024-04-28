@@ -1,7 +1,7 @@
-import IconFacebook from '../../assets/images/icons/facebook.svg?react';
-import IconInstagram from '../../assets/images/icons/instagram.svg?react';
-import IconLinkedin from '../../assets/images/icons/linkedin.svg?react';
-import { SocialIcon } from '../ui/SocialIcon/SocialIcon';
+import { SocialIcon } from '@components/ui/SocialIcon/SocialIcon';
+import IconFacebook from '@icons/facebook.svg?react';
+import IconInstagram from '@icons/instagram.svg?react';
+import IconLinkedin from '@icons/linkedin.svg?react';
 
 import styles from './footer.module.css';
 

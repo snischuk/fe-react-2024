@@ -1,12 +1,12 @@
-import IconCart from '../../assets/images/icons/cart.svg?react';
-import IconLogo from '../../assets/images/icons/logo.svg?react';
-import IconMenuBurger from '../../assets/images/icons/menu-burger.svg?react';
-import IconSignin from '../../assets/images/icons/sign-in.svg?react';
-import IconSignup from '../../assets/images/icons/sign-up.svg?react';
-import IconThemeDark from '../../assets/images/icons/theme-mode-dark.svg?react';
-import IconThemeDivider from '../../assets/images/icons/theme-mode-divider.svg?react';
-import IconThemeLight from '../../assets/images/icons/theme-mode-light.svg?react';
-import { combineClasses } from '../../utils/combineClasses';
+import IconCart from '@icons/cart.svg?react';
+import IconLogo from '@icons/logo.svg?react';
+import IconMenuBurger from '@icons/menu-burger.svg?react';
+import IconSignin from '@icons/sign-in.svg?react';
+import IconSignup from '@icons/sign-up.svg?react';
+import IconThemeDark from '@icons/theme-mode-dark.svg?react';
+import IconThemeDivider from '@icons/theme-mode-divider.svg?react';
+import IconThemeLight from '@icons/theme-mode-light.svg?react';
+import { combineClasses } from '@utils/combineClasses';
 
 import styles from './header.module.css';
 
