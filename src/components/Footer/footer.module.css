@@ -21,8 +21,6 @@
 }
 
 .footerLink {
-  display: inline-block;
-  min-width: 380px;
   text-decoration: none;
   color: var(--red-main);
   font-size: 16px;
@@ -59,6 +57,17 @@
 
   .footerSocialList {
     column-gap: 30px;
+  }
+
+  .footerLink {
+    display: inline-block;
+    min-width: 380px;
+    text-decoration: none;
+    color: var(--red-main);
+    font-size: 16px;
+    line-height: 145%;
+    font-weight: 400;
+    transition: font-weight .1s ease-in-out;
   }
 
   .footerSocialIcon {
