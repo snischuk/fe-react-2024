@@ -12,17 +12,17 @@ function Footer() {
                 <ul className={styles.footerSocialList}>
                     <li className={styles.footerSocialItem}>
                         <SocialIcon url="https://www.facebook.com/">
-                            <IconFacebook />
+                            <IconFacebook className={styles.footerSocialIcon} />
                         </SocialIcon>
                     </li>
                     <li className={styles.footerSocialItem}>
                         <SocialIcon url="https://www.linkedin.com/">
-                            <IconLinkedin />
+                            <IconLinkedin className={styles.footerSocialIcon} />
                         </SocialIcon>
                     </li>
                     <li className={styles.footerSocialItem}>
                         <SocialIcon url="https://www.instagram.com/">
-                            <IconInstagram />
+                            <IconInstagram className={styles.footerSocialIcon} />
                         </SocialIcon>
                     </li>
                 </ul>

@@ -44,9 +44,25 @@
   height: 25px;
 }
 
+.footerSocialIcon {
+  fill: currentcolor;
+}
+
 @media (any-hover: hover) {
 
   .footerLink:hover {
     font-weight: 600;
+  }
+}
+
+@media (width >=769px) {
+
+  .footerSocialList {
+    column-gap: 30px;
+  }
+
+  .footerSocialIcon {
+    width: 35px;
+    height: 35px;
   }
 }

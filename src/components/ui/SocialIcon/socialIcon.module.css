@@ -1,11 +1,11 @@
 .socialLink {
-  opacity: 1;
-  transition: .3s opacity ease-in-out;
+  color: var(--red-main);
+  transition: .3s color ease-in-out;
 }
 
 @media (any-hover: hover) {
 
   .socialLink:hover {
-    opacity: .8;
+    color: var(--red-hover);
   }
 }
