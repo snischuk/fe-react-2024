@@ -25,13 +25,13 @@ function Header() {
 
                     <IconThemeDivider />
 
-                    <button className={combineClasses([styles.headerThemeModeBtn, styles.headerThemeModeBtnActive])}>
+                    <button className={combineClasses(styles.headerThemeModeBtn, styles.headerThemeModeBtnActive)}>
                         <IconThemeDark className={styles.headerThemeModeBtnIcon} />
                     </button>
                 </div>
 
                 <div className={styles.headerPageLinks}>
-                    <a className={combineClasses([styles.headerPageLink, styles.headerPageLinkActive])} href="#about">
+                    <a className={combineClasses(styles.headerPageLink, styles.headerPageLinkActive)} href="#about">
                         About
                     </a>
                     <a className={styles.headerPageLink} href="#products">
@@ -44,12 +44,12 @@ function Header() {
                 </button>
 
                 <div className={styles.headerAuthBtns}>
-                    <button className={combineClasses([styles.headerAuthBtn, styles.headerAuthBtnDark])}>
+                    <button className={combineClasses(styles.headerAuthBtn, styles.headerAuthBtnDark)}>
                         <IconSignin className={styles.headerAuthBtnIcon} />
                         Login
                     </button>
 
-                    <button className={combineClasses([styles.headerAuthBtn, styles.headerAuthBtnAccent])}>
+                    <button className={combineClasses(styles.headerAuthBtn, styles.headerAuthBtnAccent)}>
                         <IconSignup className={styles.headerAuthBtnIcon} />
                         Sign up
                     </button>
