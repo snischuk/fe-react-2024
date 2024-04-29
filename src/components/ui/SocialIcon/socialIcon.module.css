@@ -1,0 +1,11 @@
+.socialLink {
+  color: var(--red-main);
+  transition: .3s color ease-in-out;
+}
+
+@media (any-hover: hover) {
+
+  .socialLink:hover {
+    color: var(--red-hover);
+  }
+}

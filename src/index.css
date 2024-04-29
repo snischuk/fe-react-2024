@@ -1,71 +1,37 @@
+@import "./assets/fonts/Montserrat/fonts.css";
+
 :root {
-  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
-  line-height: 1.5;
-  font-weight: 400;
-  color-scheme: light dark;
-  color: rgba(255, 255, 255, .87);
-  background-color: #242424;
-  font-synthesis: none;
-  text-rendering: optimizelegibility;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+  --red-main: #EF4934;
+  --red-hover: #D43824;
+  --darkest-grey: #111;
+  --white: #FFF;
+  --grey-1: #333;
+  --grey-2: #585858;
+  --grey-3: #CCC;
+  --grey-4: #E1E1E1;
+  --grey-hover: #F1F1F1;
 }
 
-a {
-  font-weight: 500;
-  color: #646CFF;
-  text-decoration: inherit;
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
 
-a:hover {
-  color: #535BF2;
+html {
+  height: 100%;
 }
 
 body {
-  margin: 0;
-  align-items: center;
-  min-width: 320px;
-  min-height: 100vh;
+  height: 100%;
+  font-family: "Montserrat", sans-serif;
+  font-style: normal;
+  font-weight: 400;
+  font-size: 16px;
 }
 
-h1 {
-  font-size: 3.2em;
-  line-height: 1.1;
-}
-
-button {
-  border-radius: 8px;
-  border: 1px solid transparent;
-  padding: .6em 1.2em;
-  font-size: 1em;
-  font-weight: 500;
-  font-family: inherit;
-  background-color: #1A1A1A;
-  cursor: pointer;
-  transition: border-color .25s;
-}
-
-button:hover {
-  border-color: #646CFF;
-}
-
-button:focus,
-button:focus-visible {
-  outline: 4px auto -webkit-focus-ring-color;
-}
-
-@media (prefers-color-scheme: light) {
-
-  :root {
-    color: #213547;
-    background-color: #FFF;
-  }
-
-  a:hover {
-    color: #747BFF;
-  }
-
-  button {
-    background-color: #F9F9F9;
-  }
+.root {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
 }

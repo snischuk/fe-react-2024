@@ -1,0 +1,161 @@
+.header {
+  background-color: var(--darkest-grey);
+  padding: 0 30px;
+}
+
+.headerContainer {
+  max-width: 1280px;
+  padding: 15px 0;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+}
+
+.headerLogoIcon {
+  fill: var(--white);
+}
+
+.headerThemeModeBtns {
+  display: none;
+}
+
+.headerThemeModeBtn,
+.headerCartBtn,
+.headerBurgerBtn,
+.headerAuthBtn {
+  cursor: pointer;
+  background-color: transparent;
+  border: none;
+}
+
+.headerThemeModeBtn {
+  padding: 10px 5px;
+}
+
+.headerThemeModeBtnIcon {
+  fill: none;
+  stroke: var(--grey-2);
+  transition: .3s stroke ease-in-out;
+}
+
+.headerThemeModeBtn.headerThemeModeBtnActive {
+  pointer-events: none;
+}
+
+.headerThemeModeBtn.headerThemeModeBtnActive .headerThemeModeBtnIcon {
+  stroke: var(--white);
+}
+
+.headerCartBtn {
+  margin-left: auto;
+}
+
+.headerCartIcon {
+  fill: none;
+}
+
+.headerCartIcon path {
+  stroke: var(--white);
+  stroke-width: 1.5px;
+}
+
+.headerBurgerBtn {
+  margin-left: 14px;
+}
+
+.headerPageLinks {
+  display: none;
+}
+
+.headerPageLink {
+  min-width: 80px;
+  display: flex;
+  justify-content: center;
+  text-decoration: none;
+  color: var(--white);
+  font-weight: 500;
+  transition: .3s font-weight ease-in-out;
+}
+
+.headerPageLink.headerPageLinkActive {
+  pointer-events: none;
+  font-weight: 700;
+}
+
+.headerAuthBtns {
+  display: none;
+}
+
+.headerAuthBtn {
+  flex-shrink: 0;
+  padding: 5px 10px;
+  display: flex;
+  column-gap: 6px;
+  align-items: center;
+  border-radius: 40px;
+  font-family: "Montserrat";
+  color: var(--white);
+  font-size: 16px;
+  font-weight: 500;
+  transition: .3s background-color ease-in-out;
+}
+
+.headerAuthBtnDark {
+  background-color: var(--grey-1);
+}
+
+.headerAuthBtnAccent {
+  background-color: var(--red-main);
+}
+
+@media (any-hover: hover) {
+
+  .headerThemeModeBtn:hover .headerThemeModeBtnIcon {
+    stroke: var(--white);
+  }
+
+  .headerPageLink:hover {
+    font-weight: 700;
+  }
+
+  .headerCartBtn:hover .headerCartIcon path {
+    stroke-width: 2px;
+  }
+
+  .headerAuthBtnDark:hover {
+    background-color: var(--grey-2);
+  }
+
+  .headerAuthBtnAccent:hover {
+    background-color: var(--red-hover);
+  }
+
+  .headerBurgerBtn:hover .headerBurgerIcon path {
+    stroke-width: 2px;
+  }
+}
+
+@media (width >=769px) {
+
+  .headerThemeModeBtns {
+    margin-left: 50px;
+    display: flex;
+    align-items: center;
+  }
+
+  .headerPageLinks {
+    margin-left: auto;
+    display: flex;
+    column-gap: 50px;
+  }
+
+  .headerAuthBtns {
+    margin-left: 32px;
+    display: flex;
+    column-gap: 10px;
+  }
+
+  .headerBurgerBtn {
+    display: none;
+  }
+}
