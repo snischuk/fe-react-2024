@@ -4,16 +4,14 @@ import { Header } from './components/Header/Header';
 
 import styles from './app.module.css';
 
-function App() {
-    return (
-        <>
-            <Header />
-            <main className={styles.main}>
-                <About />
-            </main>
-            <Footer />
-        </>
-    );
-}
+const App = () => (
+    <>
+        <Header />
+        <main className={styles.main}>
+            <About />
+        </main>
+        <Footer />
+    </>
+);
 
 export default App;
