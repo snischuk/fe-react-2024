@@ -1,3 +1,5 @@
+import type { FC } from 'react';
+
 import IconCart from '@icons/cart.svg?react';
 import IconLogo from '@icons/logo.svg?react';
 import IconMenuBurger from '@icons/menu-burger.svg?react';
@@ -10,7 +12,7 @@ import { combineClasses } from '@utils/combineClasses';
 
 import styles from './header.module.css';
 
-const Header = () => (
+const Header: FC = () => (
     <header className={styles.header}>
         <div className={styles.headerContainer}>
             <a href="./">

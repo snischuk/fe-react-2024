@@ -1,8 +1,10 @@
+import type { FC } from 'react';
+
 import aboutImage from '@/assets/images/about/about-main.jpeg';
 
 import styles from './about.module.css';
 
-const About = () => (
+const About: FC = () => (
     <article className={styles.about}>
         <div className={styles.aboutContainer}>
             <img className={styles.aboutImage} src={aboutImage} width="552" height="777" alt="Awesome product" />

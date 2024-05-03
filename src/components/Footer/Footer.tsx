@@ -1,3 +1,5 @@
+import type { FC } from 'react';
+
 import { SocialIcon } from '@components/ui/SocialIcon/SocialIcon';
 import IconFacebook from '@icons/facebook.svg?react';
 import IconInstagram from '@icons/instagram.svg?react';
@@ -5,7 +7,7 @@ import IconLinkedin from '@icons/linkedin.svg?react';
 
 import styles from './footer.module.css';
 
-const Footer = () => (
+const Footer: FC = () => (
     <footer className={styles.footer}>
         <div className={styles.footerContainer}>
             <ul className={styles.footerSocialList}>
