@@ -2,7 +2,7 @@ import type { FC } from 'react';
 
 import aboutImage from '@/assets/images/about/about-main.jpeg';
 
-import styles from './about.module.css';
+import styles from './About.module.css';
 
 const About: FC = () => (
     <article className={styles.about}>

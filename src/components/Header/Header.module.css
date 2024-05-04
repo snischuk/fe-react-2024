@@ -57,6 +57,7 @@
 .headerCartIcon path {
   stroke: var(--white);
   stroke-width: 1.5px;
+  transition: .3s stroke-width ease-in-out;
 }
 
 .headerBurgerBtn {

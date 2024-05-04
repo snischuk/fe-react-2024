@@ -5,7 +5,7 @@ import IconFacebook from '@icons/facebook.svg?react';
 import IconInstagram from '@icons/instagram.svg?react';
 import IconLinkedin from '@icons/linkedin.svg?react';
 
-import styles from './footer.module.css';
+import styles from './Footer.module.css';
 
 const Footer: FC = () => (
     <footer className={styles.footer}>

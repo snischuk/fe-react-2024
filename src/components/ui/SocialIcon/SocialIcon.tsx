@@ -1,8 +1,8 @@
 import type { FC, ReactNode } from 'react';
 
-import styles from './socialIcon.module.css';
+import styles from './SocialIcon.module.css';
 
-export interface SocialIconProps {
+interface SocialIconProps {
     url: string;
     children: ReactNode;
 }
