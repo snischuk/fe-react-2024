@@ -11,6 +11,15 @@ import { MOCK_PRODUCTS } from '@/data/mock-products';
 
 import styles from './App.module.css';
 
+type PagesType = {
+    [key in PageName]: React.ReactNode;
+};
+
+const Pages: PagesType = {
+    [PageName.ABOUT]: <About />,
+    [PageName.PRODUCTS]: <ProductsList products={MOCK_PRODUCTS} />,
+};
+
 const App: FC = () => {
     const [pageActive, setPageActive] = useState<PageName>(PageName.ABOUT);
 
@@ -23,21 +32,7 @@ const App: FC = () => {
         }
     };
 
-    let content;
-
-    switch (pageActive) {
-        case PageName.ABOUT: {
-            content = <About />;
-            break;
-        }
-        case PageName.PRODUCTS: {
-            content = <ProductsList products={MOCK_PRODUCTS} />;
-            break;
-        }
-        default: {
-            content = <div>Page not found... :(</div>;
-        }
-    }
+    const content = Pages[pageActive] || <div>Page not found... :(</div>;
 
     return (
         <>
