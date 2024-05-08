@@ -5,36 +5,37 @@ import { About } from '@components/About/About';
 import { Footer } from '@components/Footer/Footer';
 import { Header } from '@components/Header/Header';
 import { ProductsList } from '@components/ProductsList/ProductsList';
+import { PageName } from '@interfaces/PageName';
 
-import { PRODUCTS } from '@/data/mock-products';
+import { MOCK_PRODUCTS } from '@/data/mock-products';
 
 import styles from './App.module.css';
 
 const App: FC = () => {
-    const [pageActive, setPageActive] = useState<string>('about');
+    const [pageActive, setPageActive] = useState<PageName>(PageName.ABOUT);
 
     const onPageLinkClick = (event: MouseEvent<HTMLAnchorElement>) => {
         event.preventDefault();
         const clickedPageLink = event.currentTarget.dataset.page;
 
         if (clickedPageLink) {
-            setPageActive(clickedPageLink);
+            setPageActive(clickedPageLink as PageName);
         }
     };
 
     let content;
 
     switch (pageActive) {
-        case 'about': {
+        case PageName.ABOUT: {
             content = <About />;
             break;
         }
-        case 'products': {
-            content = <ProductsList products={PRODUCTS} />;
+        case PageName.PRODUCTS: {
+            content = <ProductsList products={MOCK_PRODUCTS} />;
             break;
         }
         default: {
-            content = <About />;
+            content = <div>Page not found... :(</div>;
         }
     }
 

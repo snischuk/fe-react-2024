@@ -5,7 +5,7 @@ const categoryCreationDate = '2024-04-26T08:20:47.094Z';
 const clothesCategoryImg = 'https://i.imgur.com/QkIa5tT.jpeg';
 const electronicsCategoryImg = 'https://i.imgur.com/ZANVnHE.jpeg1';
 
-export const PRODUCTS: Product[] = [
+export const MOCK_PRODUCTS: Product[] = [
     {
         id: 1,
         title: 'Majestic Mountain Graphic T-Shirt',

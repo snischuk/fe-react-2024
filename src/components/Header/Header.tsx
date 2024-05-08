@@ -8,17 +8,18 @@ import IconSignup from '@icons/sign-up.svg?react';
 import IconThemeDark from '@icons/theme-mode-dark.svg?react';
 import IconThemeDivider from '@icons/theme-mode-divider.svg?react';
 import IconThemeLight from '@icons/theme-mode-light.svg?react';
+import { PageName } from '@interfaces/PageName';
 import { combineClasses } from '@utils/combineClasses';
 
 import styles from './Header.module.css';
 
 interface HeaderProps {
-    pageActive: string;
+    pageActive: PageName;
     onPageLinkClick: (event: MouseEvent<HTMLAnchorElement>) => void;
 }
 
 const Header: FC<HeaderProps> = ({ pageActive, onPageLinkClick }) => {
-    const getLinkClassName = (pageName: string) =>
+    const getLinkClassName = (pageName: PageName) =>
         pageName === pageActive ? `${styles.headerPageLink} ${styles.headerPageLinkActive}` : styles.headerPageLink;
 
     return (
@@ -41,10 +42,10 @@ const Header: FC<HeaderProps> = ({ pageActive, onPageLinkClick }) => {
                 </div>
 
                 <div className={styles.headerPageLinks}>
-                    <a className={getLinkClassName('about')} href="#about" data-page="about" onClick={onPageLinkClick}>
+                    <a className={getLinkClassName(PageName.ABOUT)} href="#about" data-page="about" onClick={onPageLinkClick}>
                         About
                     </a>
-                    <a className={getLinkClassName('product')} href="#products" data-page="products" onClick={onPageLinkClick}>
+                    <a className={getLinkClassName(PageName.PRODUCTS)} href="#products" data-page="products" onClick={onPageLinkClick}>
                         Products
                     </a>
                 </div>
