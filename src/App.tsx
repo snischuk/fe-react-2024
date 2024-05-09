@@ -5,7 +5,9 @@ import { About } from '@components/About/About';
 import { Footer } from '@components/Footer/Footer';
 import { Header } from '@components/Header/Header';
 import { ProductsList } from '@components/ProductsList/ProductsList';
+import type { AddToCartHandler } from '@interfaces/Handlers';
 import { PageName } from '@interfaces/PageName';
+import type { Product } from '@interfaces/Product';
 
 import { MOCK_PRODUCTS } from '@/data/mock-products';
 
@@ -15,13 +17,13 @@ type PagesType = {
     [key in PageName]: React.ReactNode;
 };
 
-const Pages: PagesType = {
-    [PageName.ABOUT]: <About />,
-    [PageName.PRODUCTS]: <ProductsList products={MOCK_PRODUCTS} />,
-};
-
 const App: FC = () => {
     const [pageActive, setPageActive] = useState<PageName>(PageName.ABOUT);
+    const [productsInCart, setProductsInCart] = useState<Product[]>([]);
+
+    const onAddToCart: AddToCartHandler = (newProduct) => {
+        setProductsInCart((previousProducts) => [...previousProducts, newProduct]);
+    };
 
     const onPageLinkClick = (event: MouseEvent<HTMLAnchorElement>) => {
         event.preventDefault();
@@ -32,11 +34,16 @@ const App: FC = () => {
         }
     };
 
-    const content = Pages[pageActive] || <div>Page not found... :(</div>;
+    const PAGES: PagesType = {
+        [PageName.ABOUT]: <About />,
+        [PageName.PRODUCTS]: <ProductsList products={MOCK_PRODUCTS} productsInCart={productsInCart} onAddToCart={onAddToCart} />,
+    };
+
+    const content = PAGES[pageActive] || <div>Page not found... :(</div>;
 
     return (
         <>
-            <Header pageActive={pageActive} onPageLinkClick={onPageLinkClick} />
+            <Header pageActive={pageActive} productsInCart={productsInCart} onPageLinkClick={onPageLinkClick} />
             <main className={styles.main}>{content}</main>
             <Footer />
         </>

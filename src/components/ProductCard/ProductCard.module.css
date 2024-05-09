@@ -73,6 +73,14 @@
   transition: .3s stroke-width ease-in-out;
 }
 
+.cardCartBtn.cardCartBtnActive {
+  pointer-events: none;
+}
+
+.cardCartBtn.cardCartBtnActive .cardCartIcon path {
+  stroke-width: 2px;
+}
+
 @media (any-hover: hover) {
 
   .cardCartBtn:hover .cardCartIcon path {
