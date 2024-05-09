@@ -1,5 +1,5 @@
 import type { FC, MouseEvent } from 'react';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import { About } from '@components/About/About';
 import { Footer } from '@components/Footer/Footer';
@@ -17,9 +17,24 @@ type PagesType = {
     [key in PageName]: React.ReactNode;
 };
 
+const LS_KEY = 'cartMasterAcademy';
+
+const localStorageCart = localStorage.getItem(LS_KEY) ? JSON.parse(localStorage.getItem(LS_KEY)!) : [];
+
 const App: FC = () => {
     const [pageActive, setPageActive] = useState<PageName>(PageName.ABOUT);
-    const [productsInCart, setProductsInCart] = useState<Product[]>([]);
+    const [productsInCart, setProductsInCart] = useState<Product[]>(localStorageCart);
+
+    useEffect(() => {
+        const lsCart = localStorage.getItem(LS_KEY);
+        if (lsCart) {
+            setProductsInCart(JSON.parse(lsCart));
+        }
+    }, []);
+
+    useEffect(() => {
+        localStorage.setItem(LS_KEY, JSON.stringify(productsInCart));
+    }, [productsInCart]);
 
     const onAddToCart: AddToCartHandler = (newProduct) => {
         setProductsInCart((previousProducts) => [...previousProducts, newProduct]);
