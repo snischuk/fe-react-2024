@@ -1,4 +1,4 @@
-import type { FC } from 'react';
+import { type FC, useState } from 'react';
 
 import IconCart from '@icons/cart.svg?react';
 import type { AddToCartHandler } from '@interfaces/Handlers';
@@ -13,9 +13,14 @@ interface ProductCardProps {
 }
 
 const ProductCard: FC<ProductCardProps> = ({ product, productsInCart, onAddToCart }) => {
+    const [isCartActive, setIsCartActive] = useState<boolean>(false);
+
     const onClick = () => {
+        setIsCartActive(!isCartActive);
         onAddToCart(product);
     };
+
+    const cartButtonClasses = isCartActive ? `${styles.cardCartBtn} ${styles.cardCartBtnActive}` : styles.cardCartBtn;
 
     return (
         <article className={styles.card}>
@@ -28,7 +33,7 @@ const ProductCard: FC<ProductCardProps> = ({ product, productsInCart, onAddToCar
                     <span className={styles.cardPrice}>
                         <span className={styles.cardPriceValue}>{product.price}</span>₴
                     </span>
-                    <button className={styles.cardCartBtn} onClick={onClick}>
+                    <button className={cartButtonClasses} onClick={onClick}>
                         <IconCart className={styles.cardCartIcon} />
                     </button>
                 </div>
