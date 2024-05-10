@@ -1,0 +1,96 @@
+.card {
+  width: 100%;
+  height: 100%;
+  padding: 20px 15px;
+  display: flex;
+  flex-direction: column;
+  row-gap: 20px;
+  background-color: var(--darkest-grey);
+  border: 1px solid var(--grey-1);
+  border-radius: 20px;
+}
+
+.cardImageWrapper {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  height: 205px;
+}
+
+.cardImage {
+  max-width: 200px;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 20px;
+}
+
+.cardBody {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  row-gap: 20px;
+}
+
+.cardTitle {
+  flex-grow: 1;
+  color: var(--white);
+  font-size: 22px;
+  font-weight: 600;
+  line-height: 25px;
+}
+
+.cardFooter {
+  display: flex;
+  justify-content: space-between;
+}
+
+.cardPrice {
+  color: var(--white);
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.cardPriceValue {
+  color: var(--white);
+  font-size: 24px;
+  font-weight: 600;
+  line-height: 30px;
+}
+
+.cardCartBtn {
+  cursor: pointer;
+  background-color: transparent;
+  border: none;
+}
+
+.cardCartIcon {
+  fill: none;
+}
+
+.cardCartIcon path {
+  stroke: var(--white);
+  stroke-width: 1.5px;
+  transition: .3s stroke-width ease-in-out;
+}
+
+.cardCartBtn.cardCartBtnActive {
+  pointer-events: none;
+}
+
+.cardCartBtn.cardCartBtnActive .cardCartIcon path {
+  stroke-width: 2px;
+}
+
+@media (any-hover: hover) {
+
+  .cardCartBtn:hover .cardCartIcon path {
+    stroke-width: 2px;
+  }
+}
+
+@media (width > 768px) {
+
+  .cardImageWrapper {
+    justify-content: flex-start;
+  }
+}
