@@ -19,18 +19,12 @@ type PagesType = {
 
 const LS_KEY = 'cartMasterAcademy';
 
-const localStorageCart = localStorage.getItem(LS_KEY) ? JSON.parse(localStorage.getItem(LS_KEY)!) : [];
-
 const App: FC = () => {
     const [pageActive, setPageActive] = useState<PageName>(PageName.ABOUT);
-    const [productsInCart, setProductsInCart] = useState<Product[]>(localStorageCart);
-
-    useEffect(() => {
+    const [productsInCart, setProductsInCart] = useState<Product[]>(() => {
         const lsCart = localStorage.getItem(LS_KEY);
-        if (lsCart) {
-            setProductsInCart(JSON.parse(lsCart));
-        }
-    }, []);
+        return lsCart ? JSON.parse(lsCart) : [];
+    });
 
     useEffect(() => {
         localStorage.setItem(LS_KEY, JSON.stringify(productsInCart));
