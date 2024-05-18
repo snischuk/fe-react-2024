@@ -12,6 +12,26 @@
   --grey-hover: #F1F1F1;
 }
 
+[data-theme="light"] {
+  --color-text: var(--darkest-grey);
+  --color-bg: var(--white);
+  --color-border: var(--grey-3);
+  --color-btn-text: var(--grey-2);
+  --color-btn-bg: var(--white);
+  --color-btn-bg-hover: var(--grey-hover);
+  --color-btn-border: var(--grey-4);
+}
+
+[data-theme="dark"] {
+  --color-text: var(--white);
+  --color-bg: var(--darkest-grey);
+  --color-border: var(--grey-1);
+  --color-btn-text: var(--white);
+  --color-btn-bg: var(--darkest-grey);
+  --color-btn-bg-hover: var(--grey-1);
+  --color-btn-border: var(--grey-2);
+}
+
 * {
   margin: 0;
   padding: 0;

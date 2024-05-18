@@ -10,6 +10,7 @@ import IconThemeDivider from '@icons/theme-mode-divider.svg?react';
 import IconThemeLight from '@icons/theme-mode-light.svg?react';
 import { PageName } from '@interfaces/PageName';
 import type { Product } from '@interfaces/Product';
+import { ThemeMode } from '@interfaces/ThemeMode';
 import { combineClasses } from '@utils/combineClasses';
 
 import styles from './Header.module.css';
@@ -18,11 +19,16 @@ interface HeaderProps {
     pageActive: PageName;
     productsInCart: Product[];
     onPageLinkClick: (event: MouseEvent<HTMLAnchorElement>) => void;
+    currentTheme: ThemeMode;
+    onThemeModeClick: (event: MouseEvent<HTMLButtonElement>) => void;
 }
 
-const Header: FC<HeaderProps> = ({ pageActive, productsInCart, onPageLinkClick }) => {
-    const getClassName = (pageName: PageName) =>
+const Header: FC<HeaderProps> = ({ pageActive, productsInCart, onPageLinkClick, currentTheme, onThemeModeClick }) => {
+    const getPageClassName = (pageName: PageName) =>
         pageName === pageActive ? `${styles.headerPageLink} ${styles.headerPageLinkActive}` : styles.headerPageLink;
+
+    const getThemeClassName = (themeName: ThemeMode) =>
+        themeName === currentTheme ? `${styles.headerThemeModeBtn} ${styles.headerThemeModeBtnActive}` : styles.headerThemeModeBtn;
 
     return (
         <header className={styles.header}>
@@ -32,20 +38,20 @@ const Header: FC<HeaderProps> = ({ pageActive, productsInCart, onPageLinkClick }
                 </a>
 
                 <div className={styles.headerThemeModeBtns}>
-                    <button className={styles.headerThemeModeBtn}>
+                    <button className={getThemeClassName(ThemeMode.LIGHT)} data-theme-mode="light" onClick={onThemeModeClick}>
                         <IconThemeLight className={styles.headerThemeModeBtnIcon} />
                     </button>
                     <IconThemeDivider />
-                    <button className={combineClasses(styles.headerThemeModeBtn, styles.headerThemeModeBtnActive)}>
+                    <button className={getThemeClassName(ThemeMode.DARK)} data-theme-mode="dark" onClick={onThemeModeClick}>
                         <IconThemeDark className={styles.headerThemeModeBtnIcon} />
                     </button>
                 </div>
 
                 <div className={styles.headerPageLinks}>
-                    <a className={getClassName(PageName.ABOUT)} href="#about" data-page="about" onClick={onPageLinkClick}>
+                    <a className={getPageClassName(PageName.ABOUT)} href="#about" data-page="about" onClick={onPageLinkClick}>
                         About
                     </a>
-                    <a className={getClassName(PageName.PRODUCTS)} href="#products" data-page="products" onClick={onPageLinkClick}>
+                    <a className={getPageClassName(PageName.PRODUCTS)} href="#products" data-page="products" onClick={onPageLinkClick}>
                         Products
                     </a>
                 </div>
