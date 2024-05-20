@@ -1,5 +1,6 @@
 import type { FC } from 'react';
 
+import IconArrowDown from '@icons/arrow-down.svg?react';
 import IconSearch from '@icons/search.svg?react';
 
 import styles from './ControlPanel.module.css';
@@ -29,6 +30,7 @@ const ControlPanel: FC = () => (
                 <option value="Newest">Newest</option>
                 <option value="Oldest">Oldest</option>
             </select>
+            <IconArrowDown className={styles.sortSelectIcon} />
         </div>
     </div>
 );

@@ -71,7 +71,7 @@ const App: FC = () => {
     };
 
     const PAGES: PagesType = {
-        [PageName.ABOUT]: <About />,
+        [PageName.ABOUT]: <About currentTheme={currentTheme} />,
         [PageName.PRODUCTS]: <ProductsList products={MOCK_PRODUCTS} productsInCart={productsInCart} onAddToCart={onAddToCart} />,
     };
 
