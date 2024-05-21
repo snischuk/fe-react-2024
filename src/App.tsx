@@ -8,7 +8,8 @@ import { ProductsList } from '@components/ProductsList/ProductsList';
 import type { AddToCartHandler } from '@interfaces/Handlers';
 import { PageName } from '@interfaces/PageName';
 import type { Product } from '@interfaces/Product';
-import { ThemeMode } from '@interfaces/ThemeMode';
+import type { ThemeMode } from '@interfaces/ThemeMode';
+import { getSystemTheme, getThemeFromLocalStarage, saveThemeToLocalStarage } from '@utils/theme.service';
 
 import { MOCK_PRODUCTS } from '@/data/mock-products';
 
@@ -25,14 +26,8 @@ const App: FC = () => {
     const [pageActive, setPageActive] = useState<PageName>(PageName.ABOUT);
 
     const [currentTheme, setCurrentTheme] = useState<ThemeMode>(() => {
-        const isUserSystemThemeLight = window.matchMedia('(prefers-color-scheme: light)').matches;
-        const lsThemeMode = localStorage.getItem(LS_KEY_THEME_MODE) as ThemeMode;
-
-        if (lsThemeMode) {
-            return JSON.parse(lsThemeMode);
-        } else {
-            return isUserSystemThemeLight ? ThemeMode.LIGHT : ThemeMode.DARK;
-        }
+        const storedTheme = getThemeFromLocalStarage(LS_KEY_THEME_MODE);
+        return storedTheme || getSystemTheme();
     });
 
     const [productsInCart, setProductsInCart] = useState<Product[]>(() => {
@@ -45,8 +40,7 @@ const App: FC = () => {
     }, [productsInCart]);
 
     useEffect(() => {
-        localStorage.setItem(LS_KEY_THEME_MODE, JSON.stringify(currentTheme));
-        document.documentElement.dataset.theme = currentTheme;
+        saveThemeToLocalStarage(LS_KEY_THEME_MODE, currentTheme);
     }, [currentTheme]);
 
     const onAddToCart: AddToCartHandler = (newProduct) => {
