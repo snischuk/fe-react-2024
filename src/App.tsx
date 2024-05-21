@@ -66,7 +66,7 @@ const App: FC = () => {
 
     const PAGES: PagesType = {
         [PageName.ABOUT]: <About currentTheme={currentTheme} />,
-        [PageName.PRODUCTS]: <ProductsList products={MOCK_PRODUCTS} productsInCart={productsInCart} onAddToCart={onAddToCart} />,
+        [PageName.PRODUCTS]: <ProductsList products={MOCK_PRODUCTS} onAddToCart={onAddToCart} />,
     };
 
     const content = PAGES[pageActive] || <div>Page not found... :(</div>;

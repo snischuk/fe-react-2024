@@ -9,17 +9,16 @@ import styles from './ProductsList.module.css';
 
 interface ProductsListProps {
     products: Product[];
-    productsInCart: Product[];
     onAddToCart: AddToCartHandler;
 }
 
-const ProductsList: FC<ProductsListProps> = ({ products, productsInCart, onAddToCart }) => (
+const ProductsList: FC<ProductsListProps> = ({ products, onAddToCart }) => (
     <>
         <ControlPanel />
         <ul className={styles.cards}>
             {products.map((product: Product) => (
                 <li className={styles.cardsItem} key={`${product.id}${product.title}`}>
-                    <ProductCard product={product} productsInCart={productsInCart} onAddToCart={onAddToCart} />
+                    <ProductCard product={product} onAddToCart={onAddToCart} />
                 </li>
             ))}
         </ul>

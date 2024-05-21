@@ -1,4 +1,4 @@
-import { type FC, useState } from 'react';
+import { type FC, useEffect, useState } from 'react';
 
 import IconCart from '@icons/cart.svg?react';
 import type { AddToCartHandler } from '@interfaces/Handlers';
@@ -8,19 +8,25 @@ import styles from './ProductCard.module.css';
 
 interface ProductCardProps {
     product: Product;
-    productsInCart: Product[];
     onAddToCart: AddToCartHandler;
 }
 
-const ProductCard: FC<ProductCardProps> = ({ product, productsInCart, onAddToCart }) => {
-    const [isCartActive, setIsCartActive] = useState<boolean>(false);
+const ProductCard: FC<ProductCardProps> = ({ product, onAddToCart }) => {
+    const LS_KEY_PRODUCTS_IN_ONE_CARD = `MasterAcademyProductsInOneCard_${product.id}`;
+
+    const [productsInOneCard, setProductsInOneCard] = useState<number>(() => {
+        const lsProductsInOneCard = localStorage.getItem(LS_KEY_PRODUCTS_IN_ONE_CARD);
+        return lsProductsInOneCard ? Number(lsProductsInOneCard) : 0;
+    });
+
+    useEffect(() => {
+        localStorage.setItem(LS_KEY_PRODUCTS_IN_ONE_CARD, String(productsInOneCard));
+    }, [productsInOneCard, LS_KEY_PRODUCTS_IN_ONE_CARD]);
 
     const onClick = () => {
-        setIsCartActive(!isCartActive);
+        setProductsInOneCard(productsInOneCard + 1);
         onAddToCart(product);
     };
-
-    const cartButtonClasses = isCartActive ? `${styles.cardCartBtn} ${styles.cardCartBtnActive}` : styles.cardCartBtn;
 
     return (
         <article className={styles.card}>
@@ -33,8 +39,10 @@ const ProductCard: FC<ProductCardProps> = ({ product, productsInCart, onAddToCar
                     <span className={styles.cardPrice}>
                         <span className={styles.cardPriceValue}>{product.price}</span>₴
                     </span>
-                    <button className={cartButtonClasses} onClick={onClick}>
+
+                    <button className={styles.cardCartBtn} onClick={onClick}>
                         <IconCart className={styles.cardCartIcon} />
+                        {productsInOneCard > 0 && <span className={styles.cardCartQuantity}>{productsInOneCard}</span>}
                     </button>
                 </div>
             </div>
