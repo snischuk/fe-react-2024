@@ -169,6 +169,10 @@
     column-gap: 50px;
   }
 
+  .headerCartBtn {
+    margin-left: 50px;
+  }
+
   .headerAuthBtns {
     margin-left: 32px;
     display: flex;
@@ -177,5 +181,12 @@
 
   .headerBurgerBtn {
     display: none;
+  }
+}
+
+@media (width >=1025px) {
+
+  .headerCartBtn {
+    margin-left: 107px;
   }
 }

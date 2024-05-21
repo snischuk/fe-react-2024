@@ -1,7 +1,7 @@
 .about {
   height: 100%;
   padding: 0 30px;
-  background-color: var(--darkest-grey);
+  background-color: var(--color-bg);
 }
 
 .aboutContainer {
@@ -26,20 +26,20 @@
 
 .aboutTitle {
   margin: 0 0 30px;
-  color: var(--white);
+  color: var(--color-text);
   font-size: 27px;
   font-weight: 600;
 }
 
 .aboutDescription {
   margin: 0 0 30px;
-  color: var(--white);
+  color: var(--color-text);
   font-size: 16px;
 }
 
 .aboutLink {
   text-decoration: underline;
-  color: var(--white);
+  color: var(--color-text);
   line-height: 32px;
   transition: color .3s ease-in-out;
 }
@@ -66,14 +66,14 @@
 
   .aboutImage {
     order: 2;
-    flex: 1 1 45%;
+    flex: 1 1 48%;
     min-width: 100px;
     height: 777px;
     border-radius: 0;
   }
 
   .aboutContent {
-    flex: 1 1 65%;
+    flex: 1 1 52%;
     min-width: 320px;
     margin: 60px 0 0 50px;
   }
