@@ -1,38 +1,27 @@
 import type { FC } from 'react';
 
-import IconArrowDown from '@icons/arrow-down.svg?react';
+import { SelectCustom } from '@components/ui/SelectCustom/SelectCustom';
 import IconSearch from '@icons/search.svg?react';
 
 import styles from './ControlPanel.module.css';
 
 const ControlPanel: FC = () => (
-    <div className={styles.controlPanel}>
-        <div className={styles.searchBar}>
+    <fieldset className={styles.controlPanel}>
+        <fieldset className={styles.searchBar}>
             <input className={styles.searchInput} type="search" placeholder="Search..." />
             <button className={styles.searchBtn}>
                 <IconSearch className={styles.searchIcon} />
             </button>
-        </div>
+        </fieldset>
 
-        <div className={styles.filterBar}>
+        <fieldset className={styles.filterBar}>
             <button className={styles.filterBtn}>Electronics</button>
             <button className={styles.filterBtn}>Shoes</button>
             <button className={styles.filterBtn}>Clothes</button>
-        </div>
+        </fieldset>
 
-        <div className={styles.sortBar}>
-            <label className={styles.sortLabel} htmlFor="sort">
-                Sort by:
-            </label>
-            <select className={styles.sortSelect} name="sort" id="sort">
-                <option value="Price (High - Low)">Price (Hight - Low)</option>
-                <option value="Price (Low - High)">Price (Low - High)</option>
-                <option value="Newest">Newest</option>
-                <option value="Oldest">Oldest</option>
-            </select>
-            <IconArrowDown className={styles.sortSelectIcon} />
-        </div>
-    </div>
+        <SelectCustom />
+    </fieldset>
 );
 
 export { ControlPanel };

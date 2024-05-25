@@ -6,7 +6,7 @@
   --darkest-grey: #111;
   --white: #FFF;
   --grey-1: #333;
-  --grey-2: #585858;
+  --grey-2: #656565;
   --grey-3: #CCC;
   --grey-4: #E1E1E1;
   --grey-hover: #F1F1F1;
@@ -20,6 +20,9 @@
   --color-btn-bg: var(--white);
   --color-btn-bg-hover: var(--grey-hover);
   --color-btn-border: var(--grey-4);
+  --color-select-bg: var(--white);
+  --color-select-text: var(--grey-2);
+  --color-select-border: var(--grey-4);
 }
 
 [data-theme="dark"] {
@@ -30,6 +33,9 @@
   --color-btn-bg: var(--darkest-grey);
   --color-btn-bg-hover: var(--grey-1);
   --color-btn-border: var(--grey-2);
+  --color-select-bg: var(--grey-1);
+  --color-select-text: var(--white);
+  --color-select-border: var(--grey-1);
 }
 
 * {
