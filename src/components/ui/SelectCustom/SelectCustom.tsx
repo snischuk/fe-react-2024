@@ -2,8 +2,8 @@ import type { FC, MouseEventHandler } from 'react';
 import { useEffect, useRef, useState } from 'react';
 
 import IconArrowDown from '@icons/arrow-down.svg?react';
-import type { SortOptionProps } from '@interfaces/SortOption';
-import { SortOption } from '@interfaces/SortOption';
+import type { SortOptionProps } from '@interfaces/ControlPanel';
+import { SortOption } from '@interfaces/ControlPanel';
 
 import styles from './SelectCustom.module.css';
 
