@@ -2,14 +2,15 @@ import type { FC, MouseEventHandler } from 'react';
 import { useEffect, useRef, useState } from 'react';
 
 import IconArrowDown from '@icons/arrow-down.svg?react';
+import type { SortOptionProps } from '@interfaces/SortOption';
+import { SortOption } from '@interfaces/SortOption';
 
 import styles from './SelectCustom.module.css';
 
-const SORT_OPTIONS: string[] = ['Price (High - Low)', 'Price (Low - High)', 'Newest', 'Oldest'];
+const SORT_OPTIONS: SortOption[] = [SortOption.PRICE_HIGH_LOW, SortOption.PRICE_LOW_HIGH, SortOption.NEWEST, SortOption.OLDEST];
 
-const SelectCustom: FC = () => {
+const SelectCustom: FC<SortOptionProps> = ({ selectedSortOption, onSortOptionChange }) => {
     const [isSelectOpen, setIsSelectOpen] = useState<boolean>(false);
-    const [selectedOption, setSelectedOption] = useState<string>(SORT_OPTIONS[0]);
     const [isFirstOptionHovered, setIsFirstOptionHovered] = useState<boolean>(false);
 
     const selectListReference = useRef<HTMLUListElement>(null);
@@ -40,7 +41,7 @@ const SelectCustom: FC = () => {
         const optionValue = (event.target as HTMLLIElement).dataset.optionValue;
 
         if (optionValue) {
-            setSelectedOption(optionValue);
+            onSortOptionChange(optionValue as SortOption);
         }
 
         setIsSelectOpen(false);
@@ -75,8 +76,8 @@ const SelectCustom: FC = () => {
 
             <div className={styles.select}>
                 {!isSelectOpen && (
-                    <button className={styles.selectBtn} data-selected-option={selectedOption} type="button" onClick={onSelectClick}>
-                        {selectedOption}
+                    <button className={styles.selectBtn} data-selected-option={selectedSortOption} type="button" onClick={onSelectClick}>
+                        {selectedSortOption}
                     </button>
                 )}
 

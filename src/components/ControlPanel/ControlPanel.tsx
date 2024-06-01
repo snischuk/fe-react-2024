@@ -2,10 +2,11 @@ import type { FC } from 'react';
 
 import { SelectCustom } from '@components/ui/SelectCustom/SelectCustom';
 import IconSearch from '@icons/search.svg?react';
+import type { SortOptionProps } from '@interfaces/SortOption';
 
 import styles from './ControlPanel.module.css';
 
-const ControlPanel: FC = () => (
+const ControlPanel: FC<SortOptionProps> = ({ selectedSortOption, onSortOptionChange }) => (
     <fieldset className={styles.controlPanel}>
         <fieldset className={styles.searchBar}>
             <input className={styles.searchInput} type="search" placeholder="Search..." />
@@ -20,7 +21,7 @@ const ControlPanel: FC = () => (
             <button className={styles.filterBtn}>Clothes</button>
         </fieldset>
 
-        <SelectCustom />
+        <SelectCustom selectedSortOption={selectedSortOption} onSortOptionChange={onSortOptionChange} />
     </fieldset>
 );
 
