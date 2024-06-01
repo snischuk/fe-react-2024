@@ -85,7 +85,7 @@ export const MOCK_PRODUCTS: Product[] = [
         updatedAt: creationDate,
         category: {
             id: 1,
-            name: 'Clothes',
+            name: 'Shoes',
             image: clothesCategoryImg,
             creationAt: categoryCreationDate,
             updatedAt: categoryCreationDate,
@@ -136,7 +136,7 @@ export const MOCK_PRODUCTS: Product[] = [
         updatedAt: creationDate,
         category: {
             id: 1,
-            name: 'Clothes',
+            name: 'Shoes',
             image: clothesCategoryImg,
             creationAt: categoryCreationDate,
             updatedAt: categoryCreationDate,
@@ -204,7 +204,7 @@ export const MOCK_PRODUCTS: Product[] = [
         updatedAt: creationDate,
         category: {
             id: 1,
-            name: 'Clothes',
+            name: 'Shoes',
             image: clothesCategoryImg,
             creationAt: categoryCreationDate,
             updatedAt: categoryCreationDate,

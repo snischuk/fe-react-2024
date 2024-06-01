@@ -5,9 +5,8 @@ import { About } from '@components/About/About';
 import { Footer } from '@components/Footer/Footer';
 import { Header } from '@components/Header/Header';
 import { ProductsList } from '@components/ProductsList/ProductsList';
-import type { AddToCartHandler } from '@interfaces/Handlers';
 import { PageName } from '@interfaces/PageName';
-import type { Product } from '@interfaces/Product';
+import type { AddProductToCartHandler, Product } from '@interfaces/Product';
 import type { ThemeMode } from '@interfaces/ThemeMode';
 import { getSystemTheme, getThemeFromLocalStarage, saveThemeToLocalStarage } from '@utils/theme.service';
 
@@ -43,7 +42,7 @@ const App: FC = () => {
         saveThemeToLocalStarage(LS_KEY_THEME_MODE, currentTheme);
     }, [currentTheme]);
 
-    const onAddToCart: AddToCartHandler = (newProduct) => {
+    const onAddProductToCart: AddProductToCartHandler = (newProduct) => {
         setProductsInCart((previousProducts) => [...previousProducts, newProduct]);
     };
 
@@ -66,7 +65,7 @@ const App: FC = () => {
 
     const PAGES: PagesType = {
         [PageName.ABOUT]: <About currentTheme={currentTheme} />,
-        [PageName.PRODUCTS]: <ProductsList products={MOCK_PRODUCTS} onAddToCart={onAddToCart} />,
+        [PageName.PRODUCTS]: <ProductsList products={MOCK_PRODUCTS} onAddProductToCart={onAddProductToCart} />,
     };
 
     const content = PAGES[pageActive] || <div>Page not found... :(</div>;

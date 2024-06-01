@@ -94,8 +94,7 @@
     color .3s ease-in-out;
 }
 
-.filterBtn:focus {
-  outline: none;
+.filterBtnActive {
   color: var(--white);
   border-color: var(--red-main);
   background-color: var(--red-main);
