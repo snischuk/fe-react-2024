@@ -1,5 +1,5 @@
 import type { FC } from 'react';
-import { useMemo, useState } from 'react';
+import { useMemo, useRef, useState } from 'react';
 
 import { ControlPanel } from '@components/ControlPanel/ControlPanel';
 import { ProductCard } from '@components/ProductCard/ProductCard';
@@ -24,8 +24,17 @@ interface ProductsListProps {
 }
 
 const ProductsList: FC<ProductsListProps> = ({ products, onAddProductToCart }) => {
-    const [selectedSortOption, setSelectedSortOption] = useState<SortOption>(SortOption.PRICE_HIGH_LOW);
+    const [searchQuery, setSearchQuery] = useState('');
     const [selectedFiltersByCategory, setSelectedFilterByCategory] = useState<ProductCategoryName[]>([]);
+    const [selectedSortOption, setSelectedSortOption] = useState<SortOption>(SortOption.PRICE_HIGH_LOW);
+
+    const searchInputReference = useRef<HTMLInputElement>(null);
+
+    const onSearchButtonClick = () => {
+        if (searchInputReference.current) {
+            setSearchQuery(searchInputReference.current.value);
+        }
+    };
 
     const onFilterByCategoryClick = (filterOption: ProductCategoryName) => {
         const categoryIndex = selectedFiltersByCategory.indexOf(filterOption);
@@ -45,13 +54,17 @@ const ProductsList: FC<ProductsListProps> = ({ products, onAddProductToCart }) =
     const filteredAndSortedProducts = useMemo(() => {
         let filteredProducts = products;
 
+        if (searchQuery.trim() !== '') {
+            filteredProducts = filteredProducts.filter((product) => product.title.toLowerCase().includes(searchQuery.toLowerCase()));
+        }
+
         if (selectedFiltersByCategory.length > 0) {
             filteredProducts = filteredProducts.filter((product) => selectedFiltersByCategory.includes(product.category.name));
         }
 
         const sortFunction = sortFunctions[selectedSortOption];
         return [...filteredProducts].sort(sortFunction);
-    }, [products, selectedSortOption, selectedFiltersByCategory]);
+    }, [products, searchQuery, selectedSortOption, selectedFiltersByCategory]);
 
     return (
         <>
@@ -61,6 +74,8 @@ const ProductsList: FC<ProductsListProps> = ({ products, onAddProductToCart }) =
                 products={products}
                 selectedFiltersByCategory={selectedFiltersByCategory}
                 onFilterByCategoryClick={onFilterByCategoryClick}
+                onSearchBtnClick={onSearchButtonClick}
+                searchInputRef={searchInputReference}
             />
 
             <ul className={styles.cards}>

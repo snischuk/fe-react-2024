@@ -1,4 +1,5 @@
-import type { FC } from 'react';
+import type { RefObject } from 'react';
+import { type FC } from 'react';
 
 import { SelectCustom } from '@components/ui/SelectCustom/SelectCustom';
 import IconSearch from '@icons/search.svg?react';
@@ -9,12 +10,20 @@ import { getUniqueProductCategoryNames } from '@/utils/product.service';
 
 import styles from './ControlPanel.module.css';
 
-const ControlPanel: FC<SortOptionProps & FilterByCategory & { products: Product[] }> = ({
+interface ControlPanelProps extends SortOptionProps, FilterByCategory {
+    products: Product[];
+    searchInputRef: RefObject<HTMLInputElement>;
+    onSearchBtnClick: () => void;
+}
+
+const ControlPanel: FC<ControlPanelProps> = ({
     selectedSortOption,
     onSortOptionChange,
     products,
     selectedFiltersByCategory,
     onFilterByCategoryClick,
+    onSearchBtnClick,
+    searchInputRef,
 }) => {
     const uniqueProductCategoriesNames = getUniqueProductCategoryNames(products);
 
@@ -24,8 +33,8 @@ const ControlPanel: FC<SortOptionProps & FilterByCategory & { products: Product[
     return (
         <fieldset className={styles.controlPanel}>
             <fieldset className={styles.searchBar}>
-                <input className={styles.searchInput} type="search" placeholder="Search..." />
-                <button className={styles.searchBtn}>
+                <input className={styles.searchInput} type="search" placeholder="Search..." ref={searchInputRef} />
+                <button className={styles.searchBtn} onClick={onSearchBtnClick}>
                     <IconSearch className={styles.searchIcon} />
                 </button>
             </fieldset>
