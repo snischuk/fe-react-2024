@@ -1,1 +1,1 @@
-export const combineClasses = (...classArray: string[]): string => classArray.join(' ');
+export const combineClasses = (...classes: (string | undefined | false | null)[]): string => classes.filter(Boolean).join(' ');

@@ -16,26 +16,62 @@
   --color-text: var(--darkest-grey);
   --color-bg: var(--white);
   --color-border: var(--grey-3);
+
   --color-btn-text: var(--grey-2);
   --color-btn-bg: var(--white);
   --color-btn-bg-hover: var(--grey-hover);
   --color-btn-border: var(--grey-4);
+
   --color-select-bg: var(--white);
   --color-select-text: var(--grey-2);
   --color-select-border: var(--grey-4);
+
+  --color-pagination-bg-default: var(--white);
+  --color-pagination-bg-hovered: var(--grey-hover);
+  --color-pagination-bg-disabled: var(--white);
+  --color-pagination-bg-active: var(--red-main);
+  --color-pagination-bg-more: var(--white);
+  --color-pagination-border-default: var(--grey-hover);
+  --color-pagination-border-hovered: var(--grey-hover);
+  --color-pagination-border-disabled: var(--grey-hover);
+  --color-pagination-border-active: var(--red-main);
+  --color-pagination-border-more: var(--white);
+  --color-pagination-text-default: var(--darkest-grey);
+  --color-pagination-text-hovered: var(--darkest-grey);
+  --color-pagination-text-disabled: var(--grey-3);
+  --color-pagination-text-active: var(--white);
+  --color-pagination-text-more: var(--darkest-grey);
 }
 
 [data-theme="dark"] {
   --color-text: var(--white);
   --color-bg: var(--darkest-grey);
   --color-border: var(--grey-1);
+
   --color-btn-text: var(--white);
   --color-btn-bg: var(--darkest-grey);
   --color-btn-bg-hover: var(--grey-1);
   --color-btn-border: var(--grey-2);
+
   --color-select-bg: var(--grey-1);
   --color-select-text: var(--white);
   --color-select-border: var(--grey-1);
+
+  --color-pagination-bg-default: var(--darkest-grey);
+  --color-pagination-bg-hovered: var(--grey-2);
+  --color-pagination-bg-disabled: var(--grey-1);
+  --color-pagination-bg-active: var(--red-main);
+  --color-pagination-bg-more: var(--darkest-grey);
+  --color-pagination-border-default: var(--grey-2);
+  --color-pagination-border-hovered: var(--grey-2);
+  --color-pagination-border-disabled: var(--grey-1);
+  --color-pagination-border-active: var(--red-main);
+  --color-pagination-border-more: var(--darkest-grey);
+  --color-pagination-text-default: var(--white);
+  --color-pagination-text-hovered: var(--white);
+  --color-pagination-text-disabled: var(--grey-2);
+  --color-pagination-text-active: var(--white);
+  --color-pagination-text-more: var(--white);
 }
 
 * {
