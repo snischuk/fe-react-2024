@@ -11,7 +11,8 @@ import IconThemeLight from '@icons/theme-mode-light.svg?react';
 import { PageName } from '@interfaces/PageName';
 import type { Product } from '@interfaces/Product';
 import { ThemeMode } from '@interfaces/ThemeMode';
-import { combineClasses } from '@utils/combineClasses';
+
+import { combineClasses } from '@/utils/styles.service';
 
 import styles from './Header.module.css';
 

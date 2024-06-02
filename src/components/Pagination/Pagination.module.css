@@ -1,0 +1,62 @@
+.pagination {
+  margin: 0 auto 70px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+}
+
+.paginationBtn {
+  width: 32px;
+  height: 32px;
+  cursor: pointer;
+  border-radius: 8px;
+  border: 1px solid;
+  font-family: Montserrat, sans-serif;
+  font-size: 14px;
+  font-weight: 500;
+  background-color: var(--color-pagination-bg-default);
+  border-color: var(--color-pagination-border-default);
+  color: var(--color-pagination-text-default);
+  transition: background-color .3s ease-in-out,
+    color .3s ease-in-out,
+    border-color .3s ease-in-out;
+}
+
+.paginationBtnActive {
+  pointer-events: none;
+  background-color: var(--color-pagination-bg-active);
+  border-color: var(--color-pagination-border-active);
+  color: var(--color-pagination-text-active);
+}
+
+.paginationBtnMore {
+  pointer-events: none;
+  background-color: var(--color-pagination-bg-more);
+  border-color: var(--color-pagination-border-more);
+  color: var(--color-pagination-text-more);
+}
+
+.paginationBtnDisabled {
+  pointer-events: none;
+  background-color: var(--color-pagination-bg-disabled);
+  border-color: var(--color-pagination-border-disabled);
+  color: var(--color-pagination-text-disabled);
+}
+
+.paginationBtn path,
+.paginationBtnDisabled path {
+  stroke: currentcolor;
+}
+
+@media (any-hover: hover) {
+
+  .paginationBtn:hover {
+    background-color: var(--color-pagination-bg-hovered);
+    border-color: var(--color-pagination-border-hovered);
+    color: var(--color-pagination-text-hovered);
+  }
+
+  .paginationBtn:hover path {
+    stroke: currentcolor;
+  }
+}

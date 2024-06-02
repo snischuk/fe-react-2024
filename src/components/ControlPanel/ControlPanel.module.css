@@ -1,7 +1,8 @@
 .controlPanel {
+  border: none;
   width: 100%;
   max-width: 1280px;
-  padding: 30px;
+  margin: 30px;
   display: flex;
   flex-wrap: wrap;
   row-gap: 20px;
@@ -9,6 +10,7 @@
 }
 
 .searchBar {
+  border: none;
   width: 100%;
   position: relative;
 }
@@ -34,7 +36,7 @@
 
 .searchInput:focus {
   outline: none;
-  color: var(--white);
+  color: var(--color-btn-text);
   background-color: var(--color-btn-bg-hover);
   border: 1px solid var(--color-btn-bg-hover);
 }
@@ -68,6 +70,7 @@
 }
 
 .filterBar {
+  border: none;
   width: 100%;
   display: flex;
   flex-wrap: wrap;
@@ -91,69 +94,10 @@
     color .3s ease-in-out;
 }
 
-.filterBtn:focus {
-  outline: none;
+.filterBtnActive {
   color: var(--white);
   border-color: var(--red-main);
   background-color: var(--red-main);
-}
-
-.sortBar {
-  position: relative;
-  width: 100%;
-  display: flex;
-  align-items: center;
-  column-gap: 10px;
-}
-
-.sortLabel {
-  color: var(--color-text);
-  font-size: 14px;
-  font-weight: 600;
-}
-
-.sortSelect {
-  position: relative;
-  cursor: pointer;
-  appearance: none;
-  padding: 10px 40px 10px 20px;
-  font-family: Montserrat;
-  font-size: 14px;
-  font-weight: 600;
-  border-radius: 50px;
-  border: 1px solid;
-  border-color: var(--color-btn-border);
-  color: var(--color-btn-text);
-  background-color: var(--color-btn-bg);
-  transition: background-color .3s ease-in-out,
-    border-color .3s ease-in-out,
-    color .3s ease-in-out
-}
-
-.sortSelect:focus {
-  outline: none;
-  color: var(--white);
-  border-color: var(--red-main);
-  background-color: var(--red-main);
-}
-
-.sortSelectIcon {
-  fill: none;
-  width: 18px;
-  height: 18px;
-  position: absolute;
-  top: 50%;
-  right: 20px;
-  transform: translateY(-50%);
-}
-
-.sortSelectIcon path {
-  stroke: var(--color-btn-text);
-  transition: stroke .3s ease-in-out;
-}
-
-.sortSelect:focus + .sortSelectIcon path {
-  stroke: var(--white);
 }
 
 @media (any-hover: hover) {
@@ -173,34 +117,23 @@
     border-color: var(--red-main);
     background-color: var(--red-main);
   }
-
-  .sortSelect:hover {
-    color: var(--white);
-    border-color: var(--red-main);
-    background-color: var(--red-main);
-  }
-
-  .sortBar:hover .sortSelectIcon path {
-    stroke: var(--white);
-  }
 }
 
 @media (width >=769px) {
 
   .controlPanel {
-    padding: 52px 30px;
+    margin: 52px auto;
   }
 
   .searchBar {
     max-width: 275px;
   }
+}
+
+@media (width >=970px) {
 
   .filterBar {
     width: auto;
     margin-left: auto;
-  }
-
-  .sortBar {
-    width: auto;
   }
 }

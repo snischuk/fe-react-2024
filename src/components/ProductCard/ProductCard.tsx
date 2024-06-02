@@ -1,17 +1,16 @@
 import { type FC, useEffect, useState } from 'react';
 
 import IconCart from '@icons/cart.svg?react';
-import type { AddToCartHandler } from '@interfaces/Handlers';
-import type { Product } from '@interfaces/Product';
+import type { AddProductToCartHandler, Product } from '@interfaces/Product';
 
 import styles from './ProductCard.module.css';
 
 interface ProductCardProps {
     product: Product;
-    onAddToCart: AddToCartHandler;
+    onAddProductToCart: AddProductToCartHandler;
 }
 
-const ProductCard: FC<ProductCardProps> = ({ product, onAddToCart }) => {
+const ProductCard: FC<ProductCardProps> = ({ product, onAddProductToCart }) => {
     const LS_KEY_PRODUCTS_IN_ONE_CARD = `MasterAcademyProductsInOneCard_${product.id}`;
 
     const [productsInOneCard, setProductsInOneCard] = useState<number>(() => {
@@ -25,7 +24,7 @@ const ProductCard: FC<ProductCardProps> = ({ product, onAddToCart }) => {
 
     const onClick = () => {
         setProductsInOneCard(productsInOneCard + 1);
-        onAddToCart(product);
+        onAddProductToCart(product);
     };
 
     return (

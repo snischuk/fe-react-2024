@@ -1,38 +1,59 @@
-import type { FC } from 'react';
+import type { RefObject } from 'react';
+import { type FC } from 'react';
 
-import IconArrowDown from '@icons/arrow-down.svg?react';
+import { SelectCustom } from '@components/ui/SelectCustom/SelectCustom';
 import IconSearch from '@icons/search.svg?react';
+import type { FilterByCategory, SortOptionProps } from '@interfaces/ControlPanel';
+import type { Product, ProductCategoryName } from '@interfaces/Product';
+
+import { getUniqueProductCategoryNames } from '@/utils/product.service';
 
 import styles from './ControlPanel.module.css';
 
-const ControlPanel: FC = () => (
-    <div className={styles.controlPanel}>
-        <div className={styles.searchBar}>
-            <input className={styles.searchInput} type="search" placeholder="Search..." />
-            <button className={styles.searchBtn}>
-                <IconSearch className={styles.searchIcon} />
-            </button>
-        </div>
+interface ControlPanelProps extends SortOptionProps, FilterByCategory {
+    products: Product[];
+    searchInputRef: RefObject<HTMLInputElement>;
+    onSearchBtnClick: () => void;
+}
 
-        <div className={styles.filterBar}>
-            <button className={styles.filterBtn}>Electronics</button>
-            <button className={styles.filterBtn}>Shoes</button>
-            <button className={styles.filterBtn}>Clothes</button>
-        </div>
+const ControlPanel: FC<ControlPanelProps> = ({
+    selectedSortOption,
+    onSortOptionChange,
+    products,
+    selectedFiltersByCategory,
+    onFilterByCategoryClick,
+    onSearchBtnClick,
+    searchInputRef,
+}) => {
+    const uniqueProductCategoriesNames = getUniqueProductCategoryNames(products);
 
-        <div className={styles.sortBar}>
-            <label className={styles.sortLabel} htmlFor="sort">
-                Sort by:
-            </label>
-            <select className={styles.sortSelect} name="sort" id="sort">
-                <option value="Price (High - Low)">Price (Hight - Low)</option>
-                <option value="Price (Low - High)">Price (Low - High)</option>
-                <option value="Newest">Newest</option>
-                <option value="Oldest">Oldest</option>
-            </select>
-            <IconArrowDown className={styles.sortSelectIcon} />
-        </div>
-    </div>
-);
+    const getFilterButtonClassName = (filterButtonName: ProductCategoryName) =>
+        selectedFiltersByCategory.includes(filterButtonName) ? `${styles.filterBtn} ${styles.filterBtnActive}` : styles.filterBtn;
+
+    return (
+        <fieldset className={styles.controlPanel}>
+            <fieldset className={styles.searchBar}>
+                <input className={styles.searchInput} type="search" placeholder="Search..." ref={searchInputRef} />
+                <button className={styles.searchBtn} onClick={onSearchBtnClick}>
+                    <IconSearch className={styles.searchIcon} />
+                </button>
+            </fieldset>
+
+            <fieldset className={styles.filterBar}>
+                {uniqueProductCategoriesNames.map((categoryName: ProductCategoryName) => (
+                    <button
+                        className={getFilterButtonClassName(categoryName)}
+                        key={categoryName}
+                        onClick={() => onFilterByCategoryClick(categoryName)}
+                    >
+                        {categoryName}
+                    </button>
+                ))}
+            </fieldset>
+
+            <SelectCustom selectedSortOption={selectedSortOption} onSortOptionChange={onSortOptionChange} />
+        </fieldset>
+    );
+};
 
 export { ControlPanel };
