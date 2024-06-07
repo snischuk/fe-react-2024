@@ -32,8 +32,8 @@
       "@icons/*": [
         "./src/assets/images/icons/*"
       ],
-      "@utils/*": [
-        "./src/utils/*"
+      "@services/*": [
+        "./src/services/*"
       ],
       "@interfaces/*": [
         "./src/interfaces/*"

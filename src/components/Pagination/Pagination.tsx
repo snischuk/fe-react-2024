@@ -2,8 +2,7 @@ import type { FC } from 'react';
 
 import IconArrowLeft from '@icons/arrow-left.svg?react';
 import IconArrowRight from '@icons/arrow-right.svg?react';
-
-import { combineClasses } from '@/utils/styles.service';
+import { combineClasses } from '@services/styles.service';
 
 import styles from './Pagination.module.css';
 

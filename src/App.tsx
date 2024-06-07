@@ -8,7 +8,7 @@ import { ProductsList } from '@components/ProductsList/ProductsList';
 import { PageName } from '@interfaces/PageName';
 import type { AddProductToCartHandler, Product } from '@interfaces/Product';
 import type { ThemeMode } from '@interfaces/ThemeMode';
-import { getSystemTheme, getThemeFromLocalStarage, saveThemeToLocalStarage } from '@utils/theme.service';
+import { getSystemTheme, getThemeFromLocalStarage, saveThemeToLocalStarage } from '@services/theme.service';
 
 import { MOCK_PRODUCTS } from '@/data/mock-products';
 
