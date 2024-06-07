@@ -102,12 +102,16 @@ const ProductsList: FC<ProductsListProps> = ({ products, onAddProductToCart }) =
                 ))}
             </ul>
 
-            <Pagination
-                totalProducts={filteredAndSortedProducts.length}
-                productsPerPage={PRODUCTS_PER_PAGE}
-                currentPage={currentPage}
-                onPageChange={onPageChange}
-            />
+            {filteredAndSortedProducts.length === 0 ? (
+                <p>Products not found :(</p>
+            ) : (
+                <Pagination
+                    totalProducts={filteredAndSortedProducts.length}
+                    productsPerPage={PRODUCTS_PER_PAGE}
+                    currentPage={currentPage}
+                    onPageChange={onPageChange}
+                />
+            )}
         </>
     );
 };
