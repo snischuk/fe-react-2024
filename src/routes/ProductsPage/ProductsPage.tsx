@@ -1,93 +1,90 @@
 import type { FC } from 'react';
-import { useMemo, useRef, useState } from 'react';
+import { useCallback, useMemo, useRef, useState } from 'react';
 
 import { ControlPanel } from '@components/ControlPanel/ControlPanel';
 import { Pagination } from '@components/Pagination/Pagination';
 import { ProductsList } from '@components/ProductsList/ProductsList';
+import { useDataFetching } from '@hooks/useDataFetching';
+import { useFilterAndSort } from '@hooks/useFilterAndSort';
+import { usePagination } from '@hooks/usePagination';
 import type { SortOptionChangeHandler } from '@interfaces/ControlPanel';
 import { SortOption } from '@interfaces/ControlPanel';
 import type { AddProductToCartHandler, Product, ProductCategoryName } from '@interfaces/Product';
 
 import styles from './ProductsPage.module.css';
 
-type SortFunction = (a: Product, b: Product) => number;
-
-const sortFunctions: Record<SortOption, SortFunction> = {
-    [SortOption.PRICE_HIGH_LOW]: (a, b) => b.price - a.price,
-    [SortOption.PRICE_LOW_HIGH]: (a, b) => a.price - b.price,
-    [SortOption.NEWEST]: (a, b) => new Date(b.creationAt).getTime() - new Date(a.creationAt).getTime(),
-    [SortOption.OLDEST]: (a, b) => new Date(a.creationAt).getTime() - new Date(b.creationAt).getTime(),
-};
-
 interface ProductsPageProps {
-    products: Product[];
     onAddProductToCart: AddProductToCartHandler;
 }
 
-const ProductsPage: FC<ProductsPageProps> = ({ products, onAddProductToCart }) => {
+const PRODUCTS_PER_PAGE = 8;
+const URL_PRODUCTS = 'https://ma-backend-api.mocintra.com/api/v1/products';
+
+const ProductsPage: FC<ProductsPageProps> = ({ onAddProductToCart }) => {
     const [searchQuery, setSearchQuery] = useState('');
     const [selectedFiltersByCategory, setSelectedFilterByCategory] = useState<ProductCategoryName[]>([]);
     const [selectedSortOption, setSelectedSortOption] = useState<SortOption>(SortOption.PRICE_HIGH_LOW);
-    const [currentPage, setCurrentPage] = useState(1);
 
     const searchInputReference = useRef<HTMLInputElement>(null);
 
-    const PRODUCTS_PER_PAGE = 8;
+    const { data: products, isFetching, errorInfo } = useDataFetching<Product[]>({ url: URL_PRODUCTS });
 
-    const onSearchButtonClick = () => {
+    const filteredAndSortedProducts = useFilterAndSort({
+        products: products ?? [],
+        searchQuery,
+        selectedFiltersByCategory,
+        selectedSortOption,
+    });
+
+    const { currentPage, totalPages, onPageChange, startIndex, endIndex } = usePagination({
+        totalItems: filteredAndSortedProducts.length,
+        itemsPerPage: PRODUCTS_PER_PAGE,
+    });
+    const onSearchButtonClick = useCallback(() => {
         if (searchInputReference.current) {
             setSearchQuery(searchInputReference.current.value);
-            setCurrentPage(1);
+            onPageChange(1);
         }
-    };
+    }, [onPageChange]);
 
-    const onFilterByCategoryClick = (filterOption: ProductCategoryName) => {
-        const categoryIndex = selectedFiltersByCategory.indexOf(filterOption);
-        if (categoryIndex === -1) {
-            setSelectedFilterByCategory([...selectedFiltersByCategory, filterOption]);
-        } else {
-            const updatedFilters = [...selectedFiltersByCategory];
-            updatedFilters.splice(categoryIndex, 1);
-            setSelectedFilterByCategory(updatedFilters);
-        }
-        setCurrentPage(1);
-    };
+    const onFilterByCategoryClick = useCallback(
+        (filterOption: ProductCategoryName) => {
+            setSelectedFilterByCategory((previous) => {
+                const categoryIndex = previous.indexOf(filterOption);
+                if (categoryIndex === -1) {
+                    return [...previous, filterOption];
+                } else {
+                    const updatedFilters = [...previous];
+                    updatedFilters.splice(categoryIndex, 1);
+                    return updatedFilters;
+                }
+            });
+            onPageChange(1);
+        },
+        [onPageChange],
+    );
 
-    const onSortOptionChange: SortOptionChangeHandler = (sortOption) => {
-        setSelectedSortOption(sortOption);
-        setCurrentPage(1);
-    };
+    const onSortOptionChange: SortOptionChangeHandler = useCallback(
+        (sortOption) => {
+            setSelectedSortOption(sortOption);
+            onPageChange(1);
+        },
+        [onPageChange],
+    );
 
-    const onPageChange = (page: number) => {
-        setCurrentPage(page);
-    };
+    const displayedProducts = useMemo(
+        () => filteredAndSortedProducts.slice(startIndex, endIndex),
+        [filteredAndSortedProducts, startIndex, endIndex],
+    );
 
-    const filteredAndSortedProducts = useMemo(() => {
-        let filteredProducts = products;
-
-        if (searchQuery.trim() !== '') {
-            filteredProducts = filteredProducts.filter((product) => product.title.toLowerCase().includes(searchQuery.toLowerCase()));
-        }
-
-        if (selectedFiltersByCategory.length > 0) {
-            filteredProducts = filteredProducts.filter((product) => selectedFiltersByCategory.includes(product.category.name));
-        }
-
-        const sortFunction = sortFunctions[selectedSortOption];
-        return [...filteredProducts].sort(sortFunction);
-    }, [products, searchQuery, selectedSortOption, selectedFiltersByCategory]);
-
-    const displayedProducts = useMemo(() => {
-        const startIndex = (currentPage - 1) * PRODUCTS_PER_PAGE;
-        return filteredAndSortedProducts.slice(startIndex, startIndex + PRODUCTS_PER_PAGE);
-    }, [filteredAndSortedProducts, currentPage]);
-
-    return (
+    const renderLoader = () => <p className={styles.productsPageLoaderText}>Loading products...</p>;
+    const renderError = () => <p className={styles.productsPageErrorText}>{`${errorInfo}... Please try again later...`}</p>;
+    const renderContent = () => (
         <>
             <ControlPanel
                 selectedSortOption={selectedSortOption}
                 onSortOptionChange={onSortOptionChange}
-                products={products}
+                products={products ?? []} // Default to an empty array if products are null
                 selectedFiltersByCategory={selectedFiltersByCategory}
                 onFilterByCategoryClick={onFilterByCategoryClick}
                 onSearchBtnClick={onSearchButtonClick}
@@ -99,15 +96,16 @@ const ProductsPage: FC<ProductsPageProps> = ({ products, onAddProductToCart }) =
             {filteredAndSortedProducts.length === 0 ? (
                 <p className={styles.productsNotFoundInfo}>Products not found :(</p>
             ) : (
-                <Pagination
-                    totalProducts={filteredAndSortedProducts.length}
-                    productsPerPage={PRODUCTS_PER_PAGE}
-                    currentPage={currentPage}
-                    onPageChange={onPageChange}
-                />
+                <Pagination totalPages={totalPages} currentPage={currentPage} onPageChange={onPageChange} />
             )}
         </>
     );
+
+    if (isFetching) {
+        return renderLoader();
+    } else if (errorInfo) {
+        return renderError();
+    } else return renderContent();
 };
 
 export { ProductsPage };

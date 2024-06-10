@@ -1,3 +1,15 @@
+.productsPageLoaderText {
+  color: var(--color-text);
+  font-size: 16px;
+  line-height: 20px;
+}
+
+.productsPageErrorText {
+  color: var(--color-text);
+  font-size: 16px;
+  line-height: 20px;
+}
+
 .productsNotFoundInfo {
   flex-grow: 1;
   color: var(--color-text);

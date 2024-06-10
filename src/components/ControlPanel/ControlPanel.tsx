@@ -10,7 +10,7 @@ import { getUniqueProductCategoryNames } from '@services/product.service';
 import styles from './ControlPanel.module.css';
 
 interface ControlPanelProps extends SortOptionProps, FilterByCategory {
-    products: Product[];
+    products: Product[] | null;
     searchInputRef: RefObject<HTMLInputElement>;
     onSearchBtnClick: () => void;
 }

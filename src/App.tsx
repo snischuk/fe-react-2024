@@ -10,8 +10,6 @@ import { NotFoundPage } from '@routes/NotFoundPage/NotFoundPage';
 import { ProductsPage } from '@routes/ProductsPage/ProductsPage';
 import { getSystemTheme, getThemeFromLocalStarage, saveThemeToLocalStarage } from '@services/theme.service';
 
-import { MOCK_PRODUCTS } from '@/data/mock-products';
-
 const LS_KEY_CART = 'MasterAcademyCart';
 const LS_KEY_THEME_MODE = 'MasterAcademyThemeMode';
 
@@ -52,7 +50,7 @@ const App: FC = () => {
                     element={<Layout currentTheme={currentTheme} onThemeModeClick={onThemeModeClick} productsInCart={productsInCart} />}
                 >
                     <Route index element={<AboutPage currentTheme={currentTheme} />} />
-                    <Route path="products" element={<ProductsPage products={MOCK_PRODUCTS} onAddProductToCart={onAddProductToCart} />} />
+                    <Route path="products" element={<ProductsPage onAddProductToCart={onAddProductToCart} />} />
                     <Route path="*" element={<NotFoundPage />} />
                 </Route>
             </Routes>

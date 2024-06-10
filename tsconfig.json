@@ -40,6 +40,9 @@
       ],
       "@routes/*": [
         "./src/routes/*"
+      ],
+      "@hooks/*": [
+        "./src/hooks/*"
       ]
     }
   },
