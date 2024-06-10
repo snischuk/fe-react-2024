@@ -37,6 +37,9 @@
       ],
       "@interfaces/*": [
         "./src/interfaces/*"
+      ],
+      "@routes/*": [
+        "./src/routes/*"
       ]
     }
   },
