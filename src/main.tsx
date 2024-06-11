@@ -8,7 +8,7 @@ import './index.css';
 
 ReactDOM.createRoot(document.querySelector('#root')!).render(
     <StrictMode>
-        <HashRouter basename="/fe-react-2024">
+        <HashRouter>
             <App />
         </HashRouter>
     </StrictMode>,
