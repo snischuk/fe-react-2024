@@ -1,9 +1,11 @@
 import type { FC } from 'react';
-import { useCallback, useMemo, useRef, useState } from 'react';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 
 import { ControlPanel } from '@components/ControlPanel/ControlPanel';
 import { Pagination } from '@components/Pagination/Pagination';
 import { ProductsList } from '@components/ProductsList/ProductsList';
+import { BASE_URL } from '@constants/apiUrl';
+import { PRODUCTS_PER_PAGE } from '@constants/pagination';
 import { useDataFetching } from '@hooks/useDataFetching';
 import { useFilterAndSort } from '@hooks/useFilterAndSort';
 import { usePagination } from '@hooks/usePagination';
@@ -17,20 +19,28 @@ interface ProductsPageProps {
     onAddProductToCart: AddProductToCartHandler;
 }
 
-const PRODUCTS_PER_PAGE = 8;
-const URL_PRODUCTS = 'https://ma-backend-api.mocintra.com/api/v1/products';
-
 const ProductsPage: FC<ProductsPageProps> = ({ onAddProductToCart }) => {
     const [searchQuery, setSearchQuery] = useState('');
     const [selectedFiltersByCategory, setSelectedFilterByCategory] = useState<ProductCategoryName[]>([]);
     const [selectedSortOption, setSelectedSortOption] = useState<SortOption>(SortOption.PRICE_HIGH_LOW);
+    const [products, setProducts] = useState<Product[]>([]);
 
     const searchInputReference = useRef<HTMLInputElement>(null);
 
-    const { data: products, isFetching, errorInfo } = useDataFetching<Product[]>({ url: URL_PRODUCTS });
+    const {
+        data: fetchedProducts,
+        isFetching,
+        errorInfo,
+    } = useDataFetching<Product[]>({ url: BASE_URL, parseData: (data) => data.products });
+
+    useEffect(() => {
+        if (fetchedProducts && fetchedProducts.length > 0) {
+            setProducts(fetchedProducts);
+        }
+    }, [fetchedProducts]);
 
     const filteredAndSortedProducts = useFilterAndSort({
-        products: products ?? [],
+        products,
         searchQuery,
         selectedFiltersByCategory,
         selectedSortOption,
@@ -72,34 +82,31 @@ const ProductsPage: FC<ProductsPageProps> = ({ onAddProductToCart }) => {
         [onPageChange],
     );
 
-    const displayedProducts = useMemo(
+    const displayedProductsPerPage = useMemo(
         () => filteredAndSortedProducts.slice(startIndex, endIndex),
         [filteredAndSortedProducts, startIndex, endIndex],
     );
 
     const renderLoader = () => <p className={styles.productsPageLoaderText}>Loading products...</p>;
-    const renderError = () => <p className={styles.productsPageErrorText}>{`${errorInfo}... Please try again later...`}</p>;
-    const renderContent = () => (
-        <>
-            <ControlPanel
-                selectedSortOption={selectedSortOption}
-                onSortOptionChange={onSortOptionChange}
-                products={products ?? []} // Default to an empty array if products are null
-                selectedFiltersByCategory={selectedFiltersByCategory}
-                onFilterByCategoryClick={onFilterByCategoryClick}
-                onSearchBtnClick={onSearchButtonClick}
-                searchInputRef={searchInputReference}
-            />
-
-            <ProductsList products={displayedProducts} onAddProductToCart={onAddProductToCart} />
-
-            {filteredAndSortedProducts.length === 0 ? (
-                <p className={styles.productsNotFoundInfo}>Products not found :(</p>
-            ) : (
+    const renderError = () => <p className={styles.productsPageErrorText}>{`${errorInfo}... Check your connection!`}</p>;
+    const renderContent = () =>
+        filteredAndSortedProducts.length === 0 ? (
+            <p className={styles.productsNotFoundText}>Products not found :(</p>
+        ) : (
+            <>
+                <ControlPanel
+                    selectedSortOption={selectedSortOption}
+                    onSortOptionChange={onSortOptionChange}
+                    products={products}
+                    selectedFiltersByCategory={selectedFiltersByCategory}
+                    onFilterByCategoryClick={onFilterByCategoryClick}
+                    onSearchBtnClick={onSearchButtonClick}
+                    searchInputRef={searchInputReference}
+                />
+                <ProductsList products={displayedProductsPerPage} onAddProductToCart={onAddProductToCart} />
                 <Pagination totalPages={totalPages} currentPage={currentPage} onPageChange={onPageChange} />
-            )}
-        </>
-    );
+            </>
+        );
 
     if (isFetching) {
         return renderLoader();

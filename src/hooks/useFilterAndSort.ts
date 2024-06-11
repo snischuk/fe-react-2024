@@ -21,7 +21,9 @@ interface FilterAndSortParameters {
 
 const useFilterAndSort = ({ products, searchQuery, selectedFiltersByCategory, selectedSortOption }: FilterAndSortParameters) =>
     useMemo(() => {
-        if (!products) return [];
+        if (!Array.isArray(products)) {
+            return [];
+        }
 
         let filteredProducts = products;
         if (filteredProducts) {
@@ -34,7 +36,7 @@ const useFilterAndSort = ({ products, searchQuery, selectedFiltersByCategory, se
                 filteredProducts = filteredProducts.filter((product: Product) => selectedFiltersByCategory.includes(product.category.name));
             }
             const sortFunction = sortFunctions[selectedSortOption];
-            return [...filteredProducts].sort(sortFunction);
+            return Array.isArray(filteredProducts) ? [...filteredProducts].sort(sortFunction) : [];
         } else {
             return [];
         }

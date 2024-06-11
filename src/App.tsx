@@ -2,16 +2,15 @@ import type { FC } from 'react';
 import { useEffect, useState } from 'react';
 import { Route, Routes } from 'react-router-dom';
 
+import { LS_KEY_CART, LS_KEY_THEME_MODE } from '@constants/localStorage';
 import type { AddProductToCartHandler, Product } from '@interfaces/Product';
 import type { ThemeMode } from '@interfaces/ThemeMode';
 import { AboutPage } from '@routes/AboutPage/AboutPage';
 import { Layout } from '@routes/Layout/Layout';
 import { NotFoundPage } from '@routes/NotFoundPage/NotFoundPage';
+import { ProductPage } from '@routes/ProductPage/ProductPage';
 import { ProductsPage } from '@routes/ProductsPage/ProductsPage';
 import { getSystemTheme, getThemeFromLocalStarage, saveThemeToLocalStarage } from '@services/theme.service';
-
-const LS_KEY_CART = 'MasterAcademyCart';
-const LS_KEY_THEME_MODE = 'MasterAcademyThemeMode';
 
 const App: FC = () => {
     const [currentTheme, setCurrentTheme] = useState<ThemeMode>(() => {
@@ -51,6 +50,7 @@ const App: FC = () => {
                 >
                     <Route index element={<AboutPage currentTheme={currentTheme} />} />
                     <Route path="products" element={<ProductsPage onAddProductToCart={onAddProductToCart} />} />
+                    <Route path="/products/:id" element={<ProductPage />} />
                     <Route path="*" element={<NotFoundPage />} />
                 </Route>
             </Routes>

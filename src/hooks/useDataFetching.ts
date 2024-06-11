@@ -1,7 +1,8 @@
 import { useEffect, useState } from 'react';
 
-interface DataFetchingProps {
+interface DataFetchingProps<T> {
     url: string;
+    parseData: (data: any) => T;
 }
 
 interface DataFetchingResult<T> {
@@ -10,7 +11,7 @@ interface DataFetchingResult<T> {
     errorInfo: string | null;
 }
 
-export const useDataFetching = <T>({ url }: DataFetchingProps): DataFetchingResult<T> => {
+export const useDataFetching = <T>({ url, parseData }: DataFetchingProps<T>): DataFetchingResult<T> => {
     const [data, setData] = useState<T | null>(null);
     const [isFetching, setIsFetching] = useState<boolean>(true);
     const [errorInfo, setErrorInfo] = useState<string | null>(null);
@@ -23,7 +24,8 @@ export const useDataFetching = <T>({ url }: DataFetchingProps): DataFetchingResu
                     throw new Error('Failed to fetch data');
                 }
                 const jsonData: T = await response.json();
-                setData(jsonData);
+                const parsedData = parseData(jsonData);
+                setData(parsedData);
             } catch (error: any) {
                 console.error('Error fetching data:', error);
                 setErrorInfo(error.message);
@@ -33,7 +35,7 @@ export const useDataFetching = <T>({ url }: DataFetchingProps): DataFetchingResu
         };
 
         fetchData();
-    }, [url]);
+    }, [url, parseData]);
 
     return { data, isFetching, errorInfo };
 };
