@@ -27,11 +27,9 @@ const ProductsPage: FC<ProductsPageProps> = ({ onAddProductToCart }) => {
 
     const searchInputReference = useRef<HTMLInputElement>(null);
 
-    const {
-        data: fetchedProducts,
-        isFetching,
-        errorInfo,
-    } = useDataFetching<Product[]>({ url: BASE_URL, parseData: (data) => data.products });
+    const parseData = useCallback((fetchedData: { products: Product[] }) => fetchedData.products, []);
+
+    const { data: fetchedProducts, isFetching, errorInfo } = useDataFetching<Product[]>({ url: BASE_URL, parseData });
 
     useEffect(() => {
         if (fetchedProducts && fetchedProducts.length > 0) {
