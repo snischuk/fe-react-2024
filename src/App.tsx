@@ -1,29 +1,18 @@
-import type { FC, MouseEvent } from 'react';
+import type { FC } from 'react';
 import { useEffect, useState } from 'react';
+import { Route, Routes } from 'react-router-dom';
 
-import { About } from '@components/About/About';
-import { Footer } from '@components/Footer/Footer';
-import { Header } from '@components/Header/Header';
-import { ProductsList } from '@components/ProductsList/ProductsList';
-import { PageName } from '@interfaces/PageName';
+import { LS_KEY_CART, LS_KEY_THEME_MODE } from '@constants/localStorage';
 import type { AddProductToCartHandler, Product } from '@interfaces/Product';
 import type { ThemeMode } from '@interfaces/ThemeMode';
-import { getSystemTheme, getThemeFromLocalStarage, saveThemeToLocalStarage } from '@utils/theme.service';
-
-import { MOCK_PRODUCTS } from '@/data/mock-products';
-
-import styles from './App.module.css';
-
-type PagesType = {
-    [key in PageName]: React.ReactNode;
-};
-
-const LS_KEY_CART = 'MasterAcademyCart';
-const LS_KEY_THEME_MODE = 'MasterAcademyThemeMode';
+import { AboutPage } from '@routes/AboutPage/AboutPage';
+import { Layout } from '@routes/Layout/Layout';
+import { NotFoundPage } from '@routes/NotFoundPage/NotFoundPage';
+import { ProductPage } from '@routes/ProductPage/ProductPage';
+import { ProductsPage } from '@routes/ProductsPage/ProductsPage';
+import { getSystemTheme, getThemeFromLocalStarage, saveThemeToLocalStarage } from '@services/theme.service';
 
 const App: FC = () => {
-    const [pageActive, setPageActive] = useState<PageName>(PageName.ABOUT);
-
     const [currentTheme, setCurrentTheme] = useState<ThemeMode>(() => {
         const storedTheme = getThemeFromLocalStarage(LS_KEY_THEME_MODE);
         return storedTheme || getSystemTheme();
@@ -35,52 +24,36 @@ const App: FC = () => {
     });
 
     useEffect(() => {
-        localStorage.setItem(LS_KEY_CART, JSON.stringify(productsInCart));
-    }, [productsInCart]);
-
-    useEffect(() => {
         saveThemeToLocalStarage(LS_KEY_THEME_MODE, currentTheme);
     }, [currentTheme]);
+
+    useEffect(() => {
+        localStorage.setItem(LS_KEY_CART, JSON.stringify(productsInCart));
+    }, [productsInCart]);
 
     const onAddProductToCart: AddProductToCartHandler = (newProduct) => {
         setProductsInCart((previousProducts) => [...previousProducts, newProduct]);
     };
 
-    const onPageLinkClick = (event: MouseEvent<HTMLAnchorElement>) => {
-        event.preventDefault();
-        const clickedPageLink = event.currentTarget.dataset.page;
-
-        if (clickedPageLink) {
-            setPageActive(clickedPageLink as PageName);
+    const onThemeModeClick = (themeMode: ThemeMode) => {
+        if (themeMode) {
+            setCurrentTheme(themeMode);
         }
     };
-
-    const onThemeModeClick = (event: MouseEvent<HTMLButtonElement>) => {
-        const clickedThemeMode = event.currentTarget.dataset.themeMode;
-
-        if (clickedThemeMode) {
-            setCurrentTheme(clickedThemeMode as ThemeMode);
-        }
-    };
-
-    const PAGES: PagesType = {
-        [PageName.ABOUT]: <About currentTheme={currentTheme} />,
-        [PageName.PRODUCTS]: <ProductsList products={MOCK_PRODUCTS} onAddProductToCart={onAddProductToCart} />,
-    };
-
-    const content = PAGES[pageActive] || <div>Page not found... :(</div>;
 
     return (
         <>
-            <Header
-                pageActive={pageActive}
-                productsInCart={productsInCart}
-                onPageLinkClick={onPageLinkClick}
-                currentTheme={currentTheme}
-                onThemeModeClick={onThemeModeClick}
-            />
-            <main className={styles.main}>{content}</main>
-            <Footer />
+            <Routes>
+                <Route
+                    path="/"
+                    element={<Layout currentTheme={currentTheme} onThemeModeClick={onThemeModeClick} productsInCart={productsInCart} />}
+                >
+                    <Route index element={<AboutPage currentTheme={currentTheme} />} />
+                    <Route path="products" element={<ProductsPage onAddProductToCart={onAddProductToCart} />} />
+                    <Route path="/products/:id" element={<ProductPage />} />
+                    <Route path="*" element={<NotFoundPage />} />
+                </Route>
+            </Routes>
         </>
     );
 };

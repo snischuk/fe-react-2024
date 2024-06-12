@@ -5,13 +5,12 @@ import { SelectCustom } from '@components/ui/SelectCustom/SelectCustom';
 import IconSearch from '@icons/search.svg?react';
 import type { FilterByCategory, SortOptionProps } from '@interfaces/ControlPanel';
 import type { Product, ProductCategoryName } from '@interfaces/Product';
-
-import { getUniqueProductCategoryNames } from '@/utils/product.service';
+import { getUniqueProductCategoryNames } from '@services/product.service';
 
 import styles from './ControlPanel.module.css';
 
 interface ControlPanelProps extends SortOptionProps, FilterByCategory {
-    products: Product[];
+    products: Product[] | null;
     searchInputRef: RefObject<HTMLInputElement>;
     onSearchBtnClick: () => void;
 }

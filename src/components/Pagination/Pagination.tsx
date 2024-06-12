@@ -2,21 +2,17 @@ import type { FC } from 'react';
 
 import IconArrowLeft from '@icons/arrow-left.svg?react';
 import IconArrowRight from '@icons/arrow-right.svg?react';
-
-import { combineClasses } from '@/utils/styles.service';
+import { combineClasses } from '@services/styles.service';
 
 import styles from './Pagination.module.css';
 
 interface PaginationProps {
-    totalProducts: number;
-    productsPerPage: number;
+    totalPages: number;
     currentPage: number;
     onPageChange: (page: number) => void;
 }
 
-const Pagination: FC<PaginationProps> = ({ totalProducts, productsPerPage, currentPage, onPageChange }) => {
-    const totalPages = Math.ceil(totalProducts / productsPerPage);
-
+const Pagination: FC<PaginationProps> = ({ totalPages, currentPage, onPageChange }) => {
     const onPreviousPage = () => {
         if (currentPage > 1) {
             onPageChange(currentPage - 1);

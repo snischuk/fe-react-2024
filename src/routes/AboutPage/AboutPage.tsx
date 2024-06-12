@@ -5,13 +5,13 @@ import { ThemeMode } from '@interfaces/ThemeMode';
 import aboutImageDark from '@/assets/images/about/about-main-dark.jpeg';
 import aboutImageLight from '@/assets/images/about/about-main-light.jpeg';
 
-import styles from './About.module.css';
+import styles from './AboutPage.module.css';
 
-interface AboutProps {
+interface AboutPageProps {
     currentTheme: ThemeMode;
 }
 
-const About: FC<AboutProps> = ({ currentTheme }) => {
+const AboutPage: FC<AboutPageProps> = ({ currentTheme }) => {
     const getImgDependOnTheme = (theme: string) => (theme === ThemeMode.LIGHT ? aboutImageLight : aboutImageDark);
 
     return (
@@ -57,4 +57,4 @@ const About: FC<AboutProps> = ({ currentTheme }) => {
     );
 };
 
-export { About };
+export { AboutPage };

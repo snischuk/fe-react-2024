@@ -1,4 +1,5 @@
 import { type FC, useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
 
 import IconCart from '@icons/cart.svg?react';
 import type { AddProductToCartHandler, Product } from '@interfaces/Product';
@@ -28,7 +29,7 @@ const ProductCard: FC<ProductCardProps> = ({ product, onAddProductToCart }) => {
     };
 
     return (
-        <article className={styles.card}>
+        <Link className={styles.card} to={`/products/${product.id}`}>
             <div className={styles.cardImageWrapper}>
                 <img className={styles.cardImage} src={product.images[0]} alt={product.title} />
             </div>
@@ -45,7 +46,7 @@ const ProductCard: FC<ProductCardProps> = ({ product, onAddProductToCart }) => {
                     </button>
                 </div>
             </div>
-        </article>
+        </Link>
     );
 };
 

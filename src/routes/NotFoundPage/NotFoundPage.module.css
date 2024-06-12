@@ -1,0 +1,24 @@
+.notFoundPageInfo {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  color: var(--color-text);
+  font-size: 16px;
+  line-height: 20px;
+}
+
+.notFoundPageLink {
+  text-decoration: none;
+  color: var(--red-main);
+  font-size: 16px;
+  line-height: 145%;
+  font-weight: 400;
+  transition: font-weight .1s ease-in-out;
+}
+
+@media (any-hover: hover) {
+
+  .notFoundPageLink:hover {
+    font-weight: 600;
+  }
+}

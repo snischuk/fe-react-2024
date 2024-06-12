@@ -1,4 +1,5 @@
 import type { FC, MouseEvent } from 'react';
+import { Link, NavLink } from 'react-router-dom';
 
 import IconCart from '@icons/cart.svg?react';
 import IconLogo from '@icons/logo.svg?react';
@@ -8,53 +9,62 @@ import IconSignup from '@icons/sign-up.svg?react';
 import IconThemeDark from '@icons/theme-mode-dark.svg?react';
 import IconThemeDivider from '@icons/theme-mode-divider.svg?react';
 import IconThemeLight from '@icons/theme-mode-light.svg?react';
-import { PageName } from '@interfaces/PageName';
 import type { Product } from '@interfaces/Product';
 import { ThemeMode } from '@interfaces/ThemeMode';
-
-import { combineClasses } from '@/utils/styles.service';
+import { combineClasses } from '@services/styles.service';
 
 import styles from './Header.module.css';
 
 interface HeaderProps {
-    pageActive: PageName;
     productsInCart: Product[];
-    onPageLinkClick: (event: MouseEvent<HTMLAnchorElement>) => void;
     currentTheme: ThemeMode;
-    onThemeModeClick: (event: MouseEvent<HTMLButtonElement>) => void;
+    onThemeModeClick: (theme: ThemeMode) => void;
 }
 
-const Header: FC<HeaderProps> = ({ pageActive, productsInCart, onPageLinkClick, currentTheme, onThemeModeClick }) => {
-    const getPageClassName = (pageName: PageName) =>
-        pageName === pageActive ? `${styles.headerPageLink} ${styles.headerPageLinkActive}` : styles.headerPageLink;
-
+const Header: FC<HeaderProps> = ({ productsInCart, currentTheme, onThemeModeClick }) => {
+    const onButtonClick = (event: MouseEvent<HTMLButtonElement>) => {
+        const clickedThemeMode = event.currentTarget.dataset.themeMode;
+        if (clickedThemeMode) {
+            onThemeModeClick(clickedThemeMode as ThemeMode);
+        }
+    };
     const getThemeClassName = (themeName: ThemeMode) =>
         themeName === currentTheme ? `${styles.headerThemeModeBtn} ${styles.headerThemeModeBtnActive}` : styles.headerThemeModeBtn;
 
     return (
         <header className={styles.header}>
             <div className={styles.headerContainer}>
-                <a href="./">
+                <Link to="/">
                     <IconLogo className={styles.headerLogoIcon} />
-                </a>
+                </Link>
 
                 <div className={styles.headerThemeModeBtns}>
-                    <button className={getThemeClassName(ThemeMode.LIGHT)} data-theme-mode="light" onClick={onThemeModeClick}>
+                    <button className={getThemeClassName(ThemeMode.LIGHT)} data-theme-mode="light" onClick={onButtonClick}>
                         <IconThemeLight className={styles.headerThemeModeBtnIcon} />
                     </button>
                     <IconThemeDivider />
-                    <button className={getThemeClassName(ThemeMode.DARK)} data-theme-mode="dark" onClick={onThemeModeClick}>
+                    <button className={getThemeClassName(ThemeMode.DARK)} data-theme-mode="dark" onClick={onButtonClick}>
                         <IconThemeDark className={styles.headerThemeModeBtnIcon} />
                     </button>
                 </div>
 
                 <div className={styles.headerPageLinks}>
-                    <a className={getPageClassName(PageName.ABOUT)} href="#about" data-page="about" onClick={onPageLinkClick}>
+                    <NavLink
+                        className={({ isActive }) =>
+                            isActive ? `${styles.headerPageLink} ${styles.headerPageLinkActive}` : styles.headerPageLink
+                        }
+                        to="/"
+                    >
                         About
-                    </a>
-                    <a className={getPageClassName(PageName.PRODUCTS)} href="#products" data-page="products" onClick={onPageLinkClick}>
+                    </NavLink>
+                    <NavLink
+                        className={({ isActive }) =>
+                            isActive ? `${styles.headerPageLink} ${styles.headerPageLinkActive}` : styles.headerPageLink
+                        }
+                        to="/products"
+                    >
                         Products
-                    </a>
+                    </NavLink>
                 </div>
 
                 <button className={styles.headerCartBtn}>
