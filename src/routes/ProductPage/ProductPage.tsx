@@ -1,4 +1,5 @@
 import type { FC } from 'react';
+import { useCallback } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 
 import { BASE_URL } from '@constants/apiUrl';
@@ -14,13 +15,15 @@ const ProductPage: FC = () => {
     const { id } = useParams<{ id: string }>();
     const navigate = useNavigate();
 
+    const parseData = useCallback((data: Product) => data, []);
+
     const {
         data: product,
         isFetching,
         errorInfo,
     } = useDataFetching<Product>({
         url: `${BASE_URL}${id}`,
-        parseData: (data) => data,
+        parseData,
     });
 
     const onGoBack = () => {
