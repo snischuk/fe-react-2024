@@ -99,10 +99,3 @@
     stroke-width: 2px;
   }
 }
-
-@media (width >= 769px) {
-
-  .cardImageWrapper {
-    justify-content: flex-start;
-  }
-}
