@@ -2,6 +2,7 @@ import { type FC, useEffect } from 'react';
 import { useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 
+import { Loader } from '@components/Loader/Loader';
 import IconArrowLeft from '@icons/arrow-left.svg?react';
 import IconArrowRight from '@icons/arrow-right.svg?react';
 import IconCart from '@icons/cart.svg?react';
@@ -39,7 +40,7 @@ const ProductPage: FC = () => {
 
     return (
         <>
-            {isFetching && <p className={styles.productPageLoaderText}>Loading product...</p>}
+            {isFetching && <Loader />}
             {!isFetching && fetchError && <p className={styles.productPageErrorText}>{`${fetchError}... Check your connection!`}</p>}
             {!isFetching && !fetchError && !product && <p className={styles.productNotFoundText}>Product not found</p>}
             {!isFetching && !fetchError && product && (

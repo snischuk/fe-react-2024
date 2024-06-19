@@ -3,6 +3,7 @@ import { useEffect, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import { ControlPanel } from '@components/ControlPanel/ControlPanel';
+import { Loader } from '@components/Loader/Loader';
 import { Pagination } from '@components/Pagination/Pagination';
 import { ProductsList } from '@components/ProductsList/ProductsList';
 import { getURLSearchParameters } from '@helpers/getURLSearchParameters';
@@ -144,7 +145,7 @@ const ProductsPage: FC<ProductsPageProps> = ({ onAddProductToCart }) => {
                 onSearchBtnClick={onSearchButtonClick}
             />
 
-            {isFetching && <p className={styles.productsPageLoaderText}>Loading products...</p>}
+            {isFetching && <Loader />}
             {!isFetching && fetchError && <p className={styles.productsPageErrorText}>{`${fetchError}... Check your connection!`}</p>}
             {!isFetching && !fetchError && products.length === 0 && <p className={styles.productsNotFoundText}>Products not found :(</p>}
             {!isFetching && !fetchError && products.length > 0 && (
