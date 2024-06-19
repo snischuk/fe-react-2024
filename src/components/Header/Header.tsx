@@ -12,7 +12,7 @@ import IconThemeLight from '@icons/theme-mode-light.svg?react';
 import type { Product } from '@interfaces/Product';
 import { ThemeMode } from '@interfaces/ThemeMode';
 
-import { combineClasses } from '@/helpers/combineClasses';
+import { combineClasses } from '@/utils/combineClasses';
 
 import styles from './Header.module.css';
 

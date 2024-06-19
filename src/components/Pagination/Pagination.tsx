@@ -3,7 +3,7 @@ import type { FC } from 'react';
 import IconArrowLeft from '@icons/arrow-left.svg?react';
 import IconArrowRight from '@icons/arrow-right.svg?react';
 
-import { combineClasses } from '@/helpers/combineClasses';
+import { combineClasses } from '@/utils/combineClasses';
 
 import styles from './Pagination.module.css';
 
