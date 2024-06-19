@@ -7,9 +7,9 @@ import { SortOption } from '@interfaces/ControlPanel';
 
 import styles from './SelectCustom.module.css';
 
-const SORT_OPTIONS: SortOption[] = [SortOption.PRICE_HIGH_LOW, SortOption.PRICE_LOW_HIGH, SortOption.NEWEST, SortOption.OLDEST];
+const SORT_OPTIONS: SortOption[] = [SortOption.PRICE_HIGH_TO_LOW, SortOption.PRICE_LOW_TO_HIGH];
 
-const SelectCustom: FC<SortOptionProps> = ({ selectedSortOption, onSortOptionChange }) => {
+const SelectCustom: FC<SortOptionProps> = ({ selectedSortOption, onSortOptionClick }) => {
     const [isSelectOpen, setIsSelectOpen] = useState<boolean>(false);
     const [isFirstOptionHovered, setIsFirstOptionHovered] = useState<boolean>(false);
 
@@ -41,7 +41,7 @@ const SelectCustom: FC<SortOptionProps> = ({ selectedSortOption, onSortOptionCha
         const optionValue = (event.target as HTMLLIElement).dataset.optionValue;
 
         if (optionValue) {
-            onSortOptionChange(optionValue as SortOption);
+            onSortOptionClick(optionValue as SortOption);
         }
 
         setIsSelectOpen(false);

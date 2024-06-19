@@ -17,6 +17,6 @@ export interface ProductCategory {
     updatedAt: Date | string;
 }
 
-export type ProductCategoryName = ProductCategory['name'];
+export type ProductFilterByCategory = Pick<ProductCategory, 'id' | 'name'>;
 
 export type AddProductToCartHandler = (product: Product) => void;

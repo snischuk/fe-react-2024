@@ -1,5 +1,5 @@
 .pagination {
-  margin: 0 auto 70px;
+  margin: 70px auto;
   display: flex;
   flex-wrap: wrap;
   gap: 5px;

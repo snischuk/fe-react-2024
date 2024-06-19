@@ -11,7 +11,8 @@ import IconThemeDivider from '@icons/theme-mode-divider.svg?react';
 import IconThemeLight from '@icons/theme-mode-light.svg?react';
 import type { Product } from '@interfaces/Product';
 import { ThemeMode } from '@interfaces/ThemeMode';
-import { combineClasses } from '@services/styles.service';
+
+import { combineClasses } from '@/helpers/combineClasses';
 
 import styles from './Header.module.css';
 

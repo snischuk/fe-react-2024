@@ -13,12 +13,13 @@ export default defineConfig({
       alias: {
         "@": path.resolve(__dirname, "./src"),
         "@components": path.resolve(__dirname, "./src/components"),
-        "@services": path.resolve(__dirname, "./src/services"),
+        "@constants": path.resolve(__dirname, "./src/constants"),
+        "@helpers": path.resolve(__dirname, "./src/helpers"),
+        "@hooks": path.resolve(__dirname, "./src/hooks"),
         "@icons": path.resolve(__dirname, "./src/assets/images/icons"),
         "@interfaces": path.resolve(__dirname, "./src/interfaces"),
         "@routes": path.resolve(__dirname, "./src/routes"),
-        "@hooks": path.resolve(__dirname, "./src/hooks"),
-        "@constants": path.resolve(__dirname, "./src/constants"),
+        "@services": path.resolve(__dirname, "./src/services"),
       },
     },
 });

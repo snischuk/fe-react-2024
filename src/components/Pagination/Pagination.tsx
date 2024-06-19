@@ -2,51 +2,56 @@ import type { FC } from 'react';
 
 import IconArrowLeft from '@icons/arrow-left.svg?react';
 import IconArrowRight from '@icons/arrow-right.svg?react';
-import { combineClasses } from '@services/styles.service';
+
+import { combineClasses } from '@/helpers/combineClasses';
 
 import styles from './Pagination.module.css';
 
 interface PaginationProps {
-    totalPages: number;
-    currentPage: number;
-    onPageChange: (page: number) => void;
+    totalPaginatonPages: number;
+    currentPaginatonPage: number;
+    onPaginatonPageChange: (page: number) => void;
 }
 
-const Pagination: FC<PaginationProps> = ({ totalPages, currentPage, onPageChange }) => {
+const Pagination: FC<PaginationProps> = ({ totalPaginatonPages, currentPaginatonPage, onPaginatonPageChange }) => {
     const onPreviousPage = () => {
-        if (currentPage > 1) {
-            onPageChange(currentPage - 1);
+        if (currentPaginatonPage > 1) {
+            onPaginatonPageChange(currentPaginatonPage - 1);
         }
     };
 
     const onNextPage = () => {
-        if (currentPage < totalPages) {
-            onPageChange(currentPage + 1);
+        if (currentPaginatonPage < totalPaginatonPages) {
+            onPaginatonPageChange(currentPaginatonPage + 1);
         }
     };
 
     const onPageClick = (page: number) => {
-        onPageChange(page);
+        onPaginatonPageChange(page);
     };
 
     const generatePageNumbers = () => {
         const pageNumbers: (number | string)[] = [];
-        if (totalPages <= 5) {
-            for (let index = 1; index <= totalPages; index++) {
+        if (totalPaginatonPages <= 5) {
+            for (let index = 1; index <= totalPaginatonPages; index++) {
                 pageNumbers.push(index);
             }
         } else {
             pageNumbers.push(1);
-            if (currentPage > 3) {
+            if (currentPaginatonPage > 3) {
                 pageNumbers.push('...');
             }
-            for (let index = Math.max(2, currentPage - 1); index <= Math.min(totalPages - 1, currentPage + 1); index++) {
+            for (
+                let index = Math.max(2, currentPaginatonPage - 1);
+                index <= Math.min(totalPaginatonPages - 1, currentPaginatonPage + 1);
+                index++
+            ) {
                 pageNumbers.push(index);
             }
-            if (currentPage < totalPages - 2) {
+            if (currentPaginatonPage < totalPaginatonPages - 2) {
                 pageNumbers.push('...');
             }
-            pageNumbers.push(totalPages);
+            pageNumbers.push(totalPaginatonPages);
         }
         return pageNumbers;
     };
@@ -54,9 +59,9 @@ const Pagination: FC<PaginationProps> = ({ totalPages, currentPage, onPageChange
     return (
         <div className={styles.pagination}>
             <button
-                className={combineClasses(styles.paginationBtn, currentPage === 1 && styles.paginationBtnDisabled)}
+                className={combineClasses(styles.paginationBtn, currentPaginatonPage === 1 && styles.paginationBtnDisabled)}
                 onClick={onPreviousPage}
-                disabled={currentPage === 1}
+                disabled={currentPaginatonPage === 1}
             >
                 <IconArrowLeft />
             </button>
@@ -66,7 +71,7 @@ const Pagination: FC<PaginationProps> = ({ totalPages, currentPage, onPageChange
                     className={combineClasses(
                         styles.paginationBtn,
                         page === '...' && styles.paginationBtnMore,
-                        page === currentPage && styles.paginationBtnActive,
+                        page === currentPaginatonPage && styles.paginationBtnActive,
                     )}
                     onClick={() => typeof page === 'number' && onPageClick(page)}
                     disabled={page === '...'}
@@ -75,9 +80,12 @@ const Pagination: FC<PaginationProps> = ({ totalPages, currentPage, onPageChange
                 </button>
             ))}
             <button
-                className={combineClasses(styles.paginationBtn, currentPage === totalPages && styles.paginationBtnDisabled)}
+                className={combineClasses(
+                    styles.paginationBtn,
+                    currentPaginatonPage === totalPaginatonPages && styles.paginationBtnDisabled,
+                )}
                 onClick={onNextPage}
-                disabled={currentPage === totalPages}
+                disabled={currentPaginatonPage === totalPaginatonPages}
             >
                 <IconArrowRight />
             </button>

@@ -1,17 +1,20 @@
-.productLoaderText {
+.productPageLoaderText {
+  margin: 20px;
   color: var(--color-text);
   font-size: 16px;
   line-height: 20px;
 }
 
-.productErrorText {
+.productPageErrorText {
+  margin: 20px;
   color: var(--color-text);
   font-size: 16px;
   line-height: 20px;
 }
 
-.productNotFoundText {
+.productPageNotFoundText {
   flex-grow: 1;
+  margin: 20px;
   color: var(--color-text);
   font-size: 16px;
   line-height: 20px;

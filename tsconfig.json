@@ -29,11 +29,17 @@
       "@components/*": [
         "./src/components/*"
       ],
+      "@constants/*": [
+        "./src/constants/*"
+      ],
+      "@helpers/*": [
+        "./src/helpers/*"
+      ],
+      "@hooks/*": [
+        "./src/hooks/*"
+      ],
       "@icons/*": [
         "./src/assets/images/icons/*"
-      ],
-      "@services/*": [
-        "./src/services/*"
       ],
       "@interfaces/*": [
         "./src/interfaces/*"
@@ -41,12 +47,9 @@
       "@routes/*": [
         "./src/routes/*"
       ],
-      "@hooks/*": [
-        "./src/hooks/*"
+      "@services/*": [
+        "./src/services/*"
       ],
-      "@constants/*": [
-        "./src/constants/*"
-      ]
     }
   },
   "include": [

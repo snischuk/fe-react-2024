@@ -1,33 +1,41 @@
-import type { RefObject } from 'react';
-import { type FC } from 'react';
+import type { FC, MouseEventHandler, RefObject } from 'react';
 
 import { SelectCustom } from '@components/ui/SelectCustom/SelectCustom';
 import IconSearch from '@icons/search.svg?react';
-import type { FilterByCategory, SortOptionProps } from '@interfaces/ControlPanel';
-import type { Product, ProductCategoryName } from '@interfaces/Product';
-import { getUniqueProductCategoryNames } from '@services/product.service';
+import type { FilterByCategoryHandler, SortOptionProps } from '@interfaces/ControlPanel';
+import type { ProductFilterByCategory } from '@interfaces/Product';
 
 import styles from './ControlPanel.module.css';
 
-interface ControlPanelProps extends SortOptionProps, FilterByCategory {
-    products: Product[] | null;
+export type ProductCategoryName = Pick<ProductFilterByCategory, 'name'>;
+
+interface ControlPanelProps extends SortOptionProps {
+    filtersOptionsByCategory: ProductFilterByCategory[];
+    onFilterByCategoryClick: FilterByCategoryHandler;
+    selectedFilterByCategory: ProductFilterByCategory;
     searchInputRef: RefObject<HTMLInputElement>;
     onSearchBtnClick: () => void;
 }
 
 const ControlPanel: FC<ControlPanelProps> = ({
+    filtersOptionsByCategory,
     selectedSortOption,
-    onSortOptionChange,
-    products,
-    selectedFiltersByCategory,
+    onSortOptionClick,
+    selectedFilterByCategory,
     onFilterByCategoryClick,
     onSearchBtnClick,
     searchInputRef,
 }) => {
-    const uniqueProductCategoriesNames = getUniqueProductCategoryNames(products);
+    const getFilterButtonClassName = (filterOption: ProductFilterByCategory) =>
+        selectedFilterByCategory.id === filterOption.id ? `${styles.filterBtn} ${styles.filterBtnActive}` : styles.filterBtn;
 
-    const getFilterButtonClassName = (filterButtonName: ProductCategoryName) =>
-        selectedFiltersByCategory.includes(filterButtonName) ? `${styles.filterBtn} ${styles.filterBtnActive}` : styles.filterBtn;
+    const onCategoryClick: MouseEventHandler<HTMLButtonElement> = (event) => {
+        const clickedFilterOptionId = (event.target as HTMLButtonElement).dataset.categoryId;
+        const filterOption = filtersOptionsByCategory.find((option) => option.id.toString() === clickedFilterOptionId);
+        if (filterOption) {
+            onFilterByCategoryClick(filterOption as ProductFilterByCategory);
+        }
+    };
 
     return (
         <fieldset className={styles.controlPanel}>
@@ -39,18 +47,19 @@ const ControlPanel: FC<ControlPanelProps> = ({
             </fieldset>
 
             <fieldset className={styles.filterBar}>
-                {uniqueProductCategoriesNames.map((categoryName: ProductCategoryName) => (
+                {filtersOptionsByCategory.map((filterOption: ProductFilterByCategory) => (
                     <button
-                        className={getFilterButtonClassName(categoryName)}
-                        key={categoryName}
-                        onClick={() => onFilterByCategoryClick(categoryName)}
+                        className={getFilterButtonClassName(filterOption)}
+                        key={filterOption.id}
+                        data-category-id={filterOption.id}
+                        onClick={onCategoryClick}
                     >
-                        {categoryName}
+                        {filterOption.name}
                     </button>
                 ))}
             </fieldset>
 
-            <SelectCustom selectedSortOption={selectedSortOption} onSortOptionChange={onSortOptionChange} />
+            <SelectCustom selectedSortOption={selectedSortOption} onSortOptionClick={onSortOptionClick} />
         </fieldset>
     );
 };
