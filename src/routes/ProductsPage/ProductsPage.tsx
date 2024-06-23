@@ -1,4 +1,4 @@
-import type { FC } from 'react';
+import type { FC, KeyboardEvent } from 'react';
 import { useEffect, useRef, useState } from 'react';
 
 import { ControlPanel } from '@components/ControlPanel/ControlPanel';
@@ -53,6 +53,12 @@ const ProductsPage: FC<ProductsPageProps> = ({ onAddProductToCart }) => {
         setCurrentPaginationPage(1);
     };
 
+    const onSearchEnterPress = (event: KeyboardEvent<HTMLInputElement>) => {
+        if (event.key === 'Enter') {
+            onSearchButtonClick();
+        }
+    };
+
     const onFilterByCategoryClick = (filterOption: ProductFilterByCategory) => {
         setSelectedFilterByCategory((previousFilter) => (previousFilter === filterOption ? ({} as ProductFilterByCategory) : filterOption));
         setCurrentPaginationPage(1);
@@ -72,6 +78,7 @@ const ProductsPage: FC<ProductsPageProps> = ({ onAddProductToCart }) => {
                 onFilterByCategoryClick={onFilterByCategoryClick}
                 searchInputReference={searchInputReference}
                 onSearchButtonClick={onSearchButtonClick}
+                onSearchEnterPress={onSearchEnterPress}
             />
 
             <>

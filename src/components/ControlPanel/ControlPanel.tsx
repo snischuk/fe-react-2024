@@ -1,4 +1,4 @@
-import type { FC, MouseEventHandler, RefObject } from 'react';
+import type { FC, KeyboardEvent, MouseEventHandler, RefObject } from 'react';
 
 import { SelectCustom } from '@components/ui/SelectCustom/SelectCustom';
 import IconSearch from '@icons/search.svg?react';
@@ -15,6 +15,7 @@ interface ControlPanelProps {
     selectedFilterByCategory: ProductFilterByCategory;
     searchInputReference: RefObject<HTMLInputElement>;
     onSearchButtonClick: () => void;
+    onSearchEnterPress: (event: KeyboardEvent<HTMLInputElement>) => void;
     selectedSortOption: SortOption;
     onSortOptionClick: SortOptionClickHandler;
 }
@@ -26,6 +27,7 @@ const ControlPanel: FC<ControlPanelProps> = ({
     selectedFilterByCategory,
     onFilterByCategoryClick,
     onSearchButtonClick,
+    onSearchEnterPress,
     searchInputReference,
 }) => {
     const getFilterButtonClassName = (filterOption: ProductFilterByCategory) =>
@@ -42,7 +44,13 @@ const ControlPanel: FC<ControlPanelProps> = ({
     return (
         <fieldset className={styles.controlPanel}>
             <fieldset className={styles.searchBar}>
-                <input className={styles.searchInput} type="search" placeholder="Search..." ref={searchInputReference} />
+                <input
+                    className={styles.searchInput}
+                    type="search"
+                    placeholder="Search..."
+                    ref={searchInputReference}
+                    onKeyDown={onSearchEnterPress}
+                />
                 <button className={styles.searchBtn} onClick={onSearchButtonClick}>
                     <IconSearch className={styles.searchIcon} />
                 </button>
