@@ -1,94 +1,174 @@
-import type { FC } from 'react';
+import type { FC, ReactNode } from 'react';
+import { useCallback, useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
+import { Loader } from '@components/Loader/Loader';
+import { getURLSearchParameters } from '@helpers/getURLSearchParameters';
 import IconArrowLeft from '@icons/arrow-left.svg?react';
 import IconArrowRight from '@icons/arrow-right.svg?react';
-
-import { combineClasses } from '@/utils/combineClasses';
+import { SortOption } from '@interfaces/ControlPanel';
+import type { AddProductToCartHandler, Product, ProductFilterByCategory } from '@interfaces/Product';
+import { ApiService } from '@services/fetch.service';
+import { combineClasses } from '@utils/combineClasses';
 
 import styles from './Pagination.module.css';
 
 interface PaginationProps {
-    totalPaginatonPages: number;
-    currentPaginatonPage: number;
-    onPaginatonPageChange: (page: number) => void;
+    children: (products: Product[], onAddProductToCart: AddProductToCartHandler) => ReactNode;
+    onAddProductToCart: AddProductToCartHandler;
+    currentPaginationPage: number;
+    onPaginationPageChange: (page: number) => void;
+    inputSearch: string;
+    selectedFilterByCategory: ProductFilterByCategory;
+    selectedSortOption: SortOption;
 }
 
-const Pagination: FC<PaginationProps> = ({ totalPaginatonPages, currentPaginatonPage, onPaginatonPageChange }) => {
-    const onPreviousPage = () => {
-        if (currentPaginatonPage > 1) {
-            onPaginatonPageChange(currentPaginatonPage - 1);
+const PRODUCTS_PER_PAGE = 8;
+const sortOptionByPrice: { [key in SortOption]: 'asc' | 'desc' } = {
+    [SortOption.PRICE_HIGH_TO_LOW]: 'desc',
+    [SortOption.PRICE_LOW_TO_HIGH]: 'asc',
+};
+
+const Pagination: FC<PaginationProps> = ({
+    children,
+    onAddProductToCart,
+    onPaginationPageChange,
+    currentPaginationPage,
+    inputSearch,
+    selectedSortOption,
+    selectedFilterByCategory,
+}) => {
+    const navigate = useNavigate();
+    const [products, setProducts] = useState<Product[]>([]);
+    const [isFetching, setIsFetching] = useState<boolean>(true);
+    const [fetchError, setFetchError] = useState<string | null>(null);
+    const [totalPaginationPages, setTotalPaginatonPages] = useState<number>(0);
+
+    const fetchProducts = useCallback(
+        async (page: number) => {
+            setIsFetching(true);
+            try {
+                const parameters = getURLSearchParameters({
+                    limitQuery: PRODUCTS_PER_PAGE,
+                    offsetQuery: (page - 1) * PRODUCTS_PER_PAGE,
+                    searchQuery: inputSearch,
+                    filterQuery: selectedFilterByCategory.id,
+                    sortQuery: sortOptionByPrice[selectedSortOption],
+                });
+
+                navigate({
+                    search: parameters,
+                });
+
+                const responseProducts: { products: Product[]; total: number } = await ApiService.GetInstance().get(
+                    `products?${parameters}`,
+                );
+
+                setProducts(responseProducts.products);
+                setTotalPaginatonPages(Math.ceil(responseProducts.total / PRODUCTS_PER_PAGE));
+            } catch (error: any) {
+                setFetchError(error.message);
+            } finally {
+                setIsFetching(false);
+            }
+        },
+        [inputSearch, selectedFilterByCategory.id, selectedSortOption, navigate],
+    );
+
+    useEffect(() => {
+        fetchProducts(currentPaginationPage);
+    }, [fetchProducts, currentPaginationPage, inputSearch, selectedFilterByCategory.id, selectedSortOption]);
+
+    const onPreviousPage = useCallback(() => {
+        if (currentPaginationPage > 1) {
+            onPaginationPageChange(currentPaginationPage - 1);
         }
-    };
+    }, [currentPaginationPage, onPaginationPageChange]);
 
-    const onNextPage = () => {
-        if (currentPaginatonPage < totalPaginatonPages) {
-            onPaginatonPageChange(currentPaginatonPage + 1);
+    const onNextPage = useCallback(() => {
+        if (currentPaginationPage < totalPaginationPages) {
+            onPaginationPageChange(currentPaginationPage + 1);
         }
-    };
+    }, [currentPaginationPage, onPaginationPageChange, totalPaginationPages]);
 
-    const onPageClick = (page: number) => {
-        onPaginatonPageChange(page);
-    };
+    const onPageClick = useCallback(
+        (page: number) => {
+            onPaginationPageChange(page);
+        },
+        [onPaginationPageChange],
+    );
 
-    const generatePageNumbers = () => {
+    const generatePageNumbers = useCallback(() => {
         const pageNumbers: (number | string)[] = [];
-        if (totalPaginatonPages <= 5) {
-            for (let index = 1; index <= totalPaginatonPages; index++) {
+        if (totalPaginationPages <= 5) {
+            for (let index = 1; index <= totalPaginationPages; index += 1) {
                 pageNumbers.push(index);
             }
         } else {
             pageNumbers.push(1);
-            if (currentPaginatonPage > 3) {
+            if (currentPaginationPage > 3) {
                 pageNumbers.push('...');
             }
             for (
-                let index = Math.max(2, currentPaginatonPage - 1);
-                index <= Math.min(totalPaginatonPages - 1, currentPaginatonPage + 1);
-                index++
+                let index = Math.max(2, currentPaginationPage - 1);
+                index <= Math.min(totalPaginationPages - 1, currentPaginationPage + 1);
+                index += 1
             ) {
                 pageNumbers.push(index);
             }
-            if (currentPaginatonPage < totalPaginatonPages - 2) {
+            if (currentPaginationPage < totalPaginationPages - 2) {
                 pageNumbers.push('...');
             }
-            pageNumbers.push(totalPaginatonPages);
+            pageNumbers.push(totalPaginationPages);
         }
         return pageNumbers;
-    };
+    }, [currentPaginationPage, totalPaginationPages]);
+
+    const generatedPageNumbers = generatePageNumbers();
 
     return (
-        <div className={styles.pagination}>
-            <button
-                className={combineClasses(styles.paginationBtn, currentPaginatonPage === 1 && styles.paginationBtnDisabled)}
-                onClick={onPreviousPage}
-                disabled={currentPaginatonPage === 1}
-            >
-                <IconArrowLeft />
-            </button>
-            {generatePageNumbers().map((page, index) => (
-                <button
-                    key={index}
-                    className={combineClasses(
-                        styles.paginationBtn,
-                        page === '...' && styles.paginationBtnMore,
-                        page === currentPaginatonPage && styles.paginationBtnActive,
-                    )}
-                    onClick={() => typeof page === 'number' && onPageClick(page)}
-                    disabled={page === '...'}
-                >
-                    {page}
-                </button>
-            ))}
-            <button
-                className={combineClasses(
-                    styles.paginationBtn,
-                    currentPaginatonPage === totalPaginatonPages && styles.paginationBtnDisabled,
-                )}
-                onClick={onNextPage}
-                disabled={currentPaginatonPage === totalPaginatonPages}
-            >
-                <IconArrowRight />
-            </button>
+        <div className={styles.paginationWrapper}>
+            {isFetching && <Loader />}
+            {!isFetching && fetchError && <p className={styles.productsPageErrorText}>{`${fetchError}... Check your connection!`}</p>}
+            {!isFetching && !fetchError && products.length === 0 && <p className={styles.productsNotFoundText}>Products not found :(</p>}
+            {!isFetching && !fetchError && products.length > 0 && (
+                <>
+                    {children(products, onAddProductToCart)}
+                    <div className={styles.pagination}>
+                        <button
+                            className={combineClasses(styles.paginationBtn, currentPaginationPage === 1 && styles.paginationBtnDisabled)}
+                            onClick={onPreviousPage}
+                            disabled={currentPaginationPage === 1}
+                        >
+                            <IconArrowLeft />
+                        </button>
+                        {generatedPageNumbers.map((page, index) => (
+                            <button
+                                key={index}
+                                className={combineClasses(
+                                    styles.paginationBtn,
+                                    page === '...' && styles.paginationBtnMore,
+                                    page === currentPaginationPage && styles.paginationBtnActive,
+                                )}
+                                onClick={() => typeof page === 'number' && onPageClick(page)}
+                                disabled={page === '...'}
+                            >
+                                {page}
+                            </button>
+                        ))}
+                        <button
+                            className={combineClasses(
+                                styles.paginationBtn,
+                                currentPaginationPage === totalPaginationPages && styles.paginationBtnDisabled,
+                            )}
+                            onClick={onNextPage}
+                            disabled={currentPaginationPage === totalPaginationPages}
+                        >
+                            <IconArrowRight />
+                        </button>
+                    </div>
+                </>
+            )}
         </div>
     );
 };

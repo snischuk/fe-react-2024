@@ -31,7 +31,7 @@ const ProductCard: FC<ProductCardProps> = ({ product, onAddProductToCart }) => {
     return (
         <Link className={styles.card} to={`/products/${product.id}`}>
             <div className={styles.cardImageWrapper}>
-                <img className={styles.cardImage} src={product.images[0]} alt={product.title} />
+                <img className={styles.cardImage} src={product.images[0]} alt={product.title} height={200} />
             </div>
             <div className={styles.cardBody}>
                 <h2 className={styles.cardTitle}>{product.title}</h2>

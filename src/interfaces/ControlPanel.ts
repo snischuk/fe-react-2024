@@ -5,11 +5,6 @@ export enum SortOption {
     PRICE_LOW_TO_HIGH = 'Price (Low - High)',
 }
 
-export interface SortOptionProps {
-    selectedSortOption: SortOption;
-    onSortOptionClick: SortOptionClickHandler;
-}
-
 export type SortOptionClickHandler = (sortOption: SortOption) => void;
 
 export type FilterByCategoryHandler = (clickedCategory: ProductFilterByCategory) => void;

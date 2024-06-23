@@ -2,19 +2,21 @@ import type { FC, MouseEventHandler, RefObject } from 'react';
 
 import { SelectCustom } from '@components/ui/SelectCustom/SelectCustom';
 import IconSearch from '@icons/search.svg?react';
-import type { FilterByCategoryHandler, SortOptionProps } from '@interfaces/ControlPanel';
+import type { FilterByCategoryHandler, SortOption, SortOptionClickHandler } from '@interfaces/ControlPanel';
 import type { ProductFilterByCategory } from '@interfaces/Product';
 
 import styles from './ControlPanel.module.css';
 
 export type ProductCategoryName = Pick<ProductFilterByCategory, 'name'>;
 
-interface ControlPanelProps extends SortOptionProps {
+interface ControlPanelProps {
     filtersOptionsByCategory: ProductFilterByCategory[];
     onFilterByCategoryClick: FilterByCategoryHandler;
     selectedFilterByCategory: ProductFilterByCategory;
-    searchInputRef: RefObject<HTMLInputElement>;
-    onSearchBtnClick: () => void;
+    searchInputReference: RefObject<HTMLInputElement>;
+    onSearchButtonClick: () => void;
+    selectedSortOption: SortOption;
+    onSortOptionClick: SortOptionClickHandler;
 }
 
 const ControlPanel: FC<ControlPanelProps> = ({
@@ -23,8 +25,8 @@ const ControlPanel: FC<ControlPanelProps> = ({
     onSortOptionClick,
     selectedFilterByCategory,
     onFilterByCategoryClick,
-    onSearchBtnClick,
-    searchInputRef,
+    onSearchButtonClick,
+    searchInputReference,
 }) => {
     const getFilterButtonClassName = (filterOption: ProductFilterByCategory) =>
         selectedFilterByCategory.id === filterOption.id ? `${styles.filterBtn} ${styles.filterBtnActive}` : styles.filterBtn;
@@ -40,8 +42,8 @@ const ControlPanel: FC<ControlPanelProps> = ({
     return (
         <fieldset className={styles.controlPanel}>
             <fieldset className={styles.searchBar}>
-                <input className={styles.searchInput} type="search" placeholder="Search..." ref={searchInputRef} />
-                <button className={styles.searchBtn} onClick={onSearchBtnClick}>
+                <input className={styles.searchInput} type="search" placeholder="Search..." ref={searchInputReference} />
+                <button className={styles.searchBtn} onClick={onSearchButtonClick}>
                     <IconSearch className={styles.searchIcon} />
                 </button>
             </fieldset>

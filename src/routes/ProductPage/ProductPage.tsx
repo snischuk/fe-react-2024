@@ -19,7 +19,7 @@ const ProductPage: FC = () => {
     const [product, setProduct] = useState<Product>({} as Product);
 
     useEffect(() => {
-        const fetchData = async () => {
+        const fetchProduct = async () => {
             setIsFetching(true);
             try {
                 const responseProduct: Product = await ApiService.GetInstance().get(`products/${id}`);
@@ -31,7 +31,7 @@ const ProductPage: FC = () => {
             }
         };
 
-        fetchData();
+        fetchProduct();
     }, [id]);
 
     const onGoBack = () => {
