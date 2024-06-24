@@ -1,8 +1,9 @@
-import { type FC, useEffect } from 'react';
-import { useState } from 'react';
+import type { FC } from 'react';
+import { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 
 import { Loader } from '@components/Loader/Loader';
+import { useCart } from '@contexts/CartContext';
 import IconArrowLeft from '@icons/arrow-left.svg?react';
 import IconArrowRight from '@icons/arrow-right.svg?react';
 import IconCart from '@icons/cart.svg?react';
@@ -12,6 +13,7 @@ import { ApiService } from '@services/fetch.service';
 import styles from './ProductPage.module.css';
 
 const ProductPage: FC = () => {
+    const { addProductToCart } = useCart();
     const navigate = useNavigate();
     const { id } = useParams<{ id: string }>();
     const [isFetching, setIsFetching] = useState<boolean>(true);
@@ -38,6 +40,9 @@ const ProductPage: FC = () => {
         navigate(-1);
     };
 
+    const onCartButtonClick = () => {
+        addProductToCart(product);
+    };
     return (
         <>
             {isFetching && <Loader />}
@@ -81,7 +86,7 @@ const ProductPage: FC = () => {
                                 <IconArrowLeft />
                                 Back
                             </button>
-                            <button className={styles.productBtnAccent}>
+                            <button className={styles.productBtnAccent} onClick={onCartButtonClick}>
                                 <IconCart />
                                 Add to cart
                             </button>

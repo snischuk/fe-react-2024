@@ -32,6 +32,9 @@
       "@constants/*": [
         "./src/constants/*"
       ],
+      "@contexts/*": [
+        "./src/contexts/*"
+      ],
       "@helpers/*": [
         "./src/helpers/*"
       ],

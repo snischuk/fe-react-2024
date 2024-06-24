@@ -11,6 +11,6 @@ export const getThemeFromLocalStarage = (lsKey: string): ThemeMode | null => {
 };
 
 export const getSystemTheme = (): ThemeMode => {
-    const isUserSystemThemeLight = window.matchMedia('(prefers-color-scheme: light)').matches;
+    const isUserSystemThemeLight = window.matchMedia(`(prefers-color-scheme: ${ThemeMode.LIGHT})`).matches;
     return isUserSystemThemeLight ? ThemeMode.LIGHT : ThemeMode.DARK;
 };

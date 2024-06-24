@@ -1,31 +1,25 @@
-import { type FC, useEffect, useState } from 'react';
+import type { FC, MouseEvent } from 'react';
 import { Link } from 'react-router-dom';
 
+import { useCart } from '@contexts/CartContext';
 import IconCart from '@icons/cart.svg?react';
-import type { AddProductToCartHandler, Product } from '@interfaces/Product';
+import type { Product } from '@interfaces/Product';
 
 import styles from './ProductCard.module.css';
 
 interface ProductCardProps {
     product: Product;
-    onAddProductToCart: AddProductToCartHandler;
 }
 
-const ProductCard: FC<ProductCardProps> = ({ product, onAddProductToCart }) => {
-    const LS_KEY_PRODUCTS_IN_ONE_CARD = `MasterAcademyProductsInOneCard_${product.id}`;
+const ProductCard: FC<ProductCardProps> = ({ product }) => {
+    const { currentCart, addProductToCart } = useCart();
 
-    const [productsInOneCard, setProductsInOneCard] = useState<number>(() => {
-        const lsProductsInOneCard = localStorage.getItem(LS_KEY_PRODUCTS_IN_ONE_CARD);
-        return lsProductsInOneCard ? Number(lsProductsInOneCard) : 0;
-    });
+    const currentProduct = currentCart.find((cartProduct) => cartProduct.id === product.id);
+    const productsInOneCard = currentProduct ? currentProduct.count || 0 : 0;
 
-    useEffect(() => {
-        localStorage.setItem(LS_KEY_PRODUCTS_IN_ONE_CARD, String(productsInOneCard));
-    }, [productsInOneCard, LS_KEY_PRODUCTS_IN_ONE_CARD]);
-
-    const onClick = () => {
-        setProductsInOneCard(productsInOneCard + 1);
-        onAddProductToCart(product);
+    const onCartButtonClick = (event: MouseEvent<HTMLButtonElement>) => {
+        event.preventDefault();
+        addProductToCart(product);
     };
 
     return (
@@ -40,7 +34,7 @@ const ProductCard: FC<ProductCardProps> = ({ product, onAddProductToCart }) => {
                         <span className={styles.cardPriceValue}>{product.price}</span>₴
                     </span>
 
-                    <button className={styles.cardCartBtn} onClick={onClick}>
+                    <button className={styles.cardCartBtn} onClick={onCartButtonClick}>
                         <IconCart className={styles.cardCartIcon} />
                         {productsInOneCard > 0 && <span className={styles.cardCartQuantity}>{productsInOneCard}</span>}
                     </button>

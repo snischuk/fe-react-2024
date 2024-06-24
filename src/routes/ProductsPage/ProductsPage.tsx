@@ -7,15 +7,11 @@ import { Pagination } from '@components/Pagination/Pagination';
 import { ProductsList } from '@components/ProductsList/ProductsList';
 import type { SortOptionClickHandler } from '@interfaces/ControlPanel';
 import { SortOption } from '@interfaces/ControlPanel';
-import type { AddProductToCartHandler, Product, ProductCategory, ProductFilterByCategory } from '@interfaces/Product';
+import type { Product, ProductCategory, ProductFilterByCategory } from '@interfaces/Product';
 import { ApiService } from '@services/fetch.service';
 import { checkIsMobileDevice } from '@utils/checkIsMobileDevice';
 
-interface ProductsPageProps {
-    onAddProductToCart: AddProductToCartHandler;
-}
-
-const ProductsPage: FC<ProductsPageProps> = ({ onAddProductToCart }) => {
+const ProductsPage: FC = () => {
     const [isMobileDevice, setIsMobileDevice] = useState<boolean>(true);
     const [categories, setCategories] = useState<ProductCategory[]>([]);
 
@@ -84,23 +80,21 @@ const ProductsPage: FC<ProductsPageProps> = ({ onAddProductToCart }) => {
             <>
                 {isMobileDevice ? (
                     <InfiniteScroll
-                        onAddProductToCart={onAddProductToCart}
                         inputSearch={inputSearch}
                         selectedSortOption={selectedSortOption}
                         selectedFilterByCategory={selectedFilterByCategory}
                     >
-                        {(products: Product[]) => <ProductsList products={products} onAddProductToCart={onAddProductToCart} />}
+                        {(products: Product[]) => <ProductsList products={products} />}
                     </InfiniteScroll>
                 ) : (
                     <Pagination
-                        onAddProductToCart={onAddProductToCart}
                         currentPaginationPage={currentPaginationPage}
                         onPaginationPageChange={onPaginationPageChange}
                         inputSearch={inputSearch}
                         selectedSortOption={selectedSortOption}
                         selectedFilterByCategory={selectedFilterByCategory}
                     >
-                        {(products: Product[]) => <ProductsList products={products} onAddProductToCart={onAddProductToCart} />}
+                        {(products: Product[]) => <ProductsList products={products} />}
                     </Pagination>
                 )}
             </>

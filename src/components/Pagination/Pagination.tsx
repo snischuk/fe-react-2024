@@ -7,15 +7,14 @@ import { getURLSearchParameters } from '@helpers/getURLSearchParameters';
 import IconArrowLeft from '@icons/arrow-left.svg?react';
 import IconArrowRight from '@icons/arrow-right.svg?react';
 import { SortOption } from '@interfaces/ControlPanel';
-import type { AddProductToCartHandler, Product, ProductFilterByCategory } from '@interfaces/Product';
+import type { Product, ProductFilterByCategory } from '@interfaces/Product';
 import { ApiService } from '@services/fetch.service';
 import { combineClasses } from '@utils/combineClasses';
 
 import styles from './Pagination.module.css';
 
 interface PaginationProps {
-    children: (products: Product[], onAddProductToCart: AddProductToCartHandler) => ReactNode;
-    onAddProductToCart: AddProductToCartHandler;
+    children: (products: Product[]) => ReactNode;
     currentPaginationPage: number;
     onPaginationPageChange: (page: number) => void;
     inputSearch: string;
@@ -31,7 +30,6 @@ const sortOptionByPrice: { [key in SortOption]: 'asc' | 'desc' } = {
 
 const Pagination: FC<PaginationProps> = ({
     children,
-    onAddProductToCart,
     onPaginationPageChange,
     currentPaginationPage,
     inputSearch,
@@ -133,7 +131,7 @@ const Pagination: FC<PaginationProps> = ({
             {!isFetching && !fetchError && products.length === 0 && <p className={styles.productsNotFoundText}>Products not found :(</p>}
             {!isFetching && !fetchError && products.length > 0 && (
                 <>
-                    {children(products, onAddProductToCart)}
+                    {children(products)}
                     <div className={styles.pagination}>
                         <button
                             className={combineClasses(styles.paginationBtn, currentPaginationPage === 1 && styles.paginationBtnDisabled)}

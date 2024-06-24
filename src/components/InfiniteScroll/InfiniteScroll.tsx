@@ -5,14 +5,13 @@ import { useNavigate } from 'react-router-dom';
 import { Loader } from '@components/Loader/Loader';
 import { getURLSearchParameters } from '@helpers/getURLSearchParameters';
 import { SortOption } from '@interfaces/ControlPanel';
-import type { AddProductToCartHandler, Product, ProductFilterByCategory } from '@interfaces/Product';
+import type { Product, ProductFilterByCategory } from '@interfaces/Product';
 import { ApiService } from '@services/fetch.service';
 
 import styles from './InfiniteScroll.module.css';
 
 interface InfiniteScrollProps {
-    children: (products: Product[], onAddProductToCart: AddProductToCartHandler) => ReactNode;
-    onAddProductToCart: AddProductToCartHandler;
+    children: (products: Product[]) => ReactNode;
     inputSearch: string;
     selectedFilterByCategory: ProductFilterByCategory;
     selectedSortOption: SortOption;
@@ -24,13 +23,7 @@ const sortOptionByPrice: { [key in SortOption]: 'asc' | 'desc' } = {
     [SortOption.PRICE_LOW_TO_HIGH]: 'asc',
 };
 
-const InfiniteScroll: FC<InfiniteScrollProps> = ({
-    children,
-    onAddProductToCart,
-    inputSearch,
-    selectedSortOption,
-    selectedFilterByCategory,
-}) => {
+const InfiniteScroll: FC<InfiniteScrollProps> = ({ children, inputSearch, selectedSortOption, selectedFilterByCategory }) => {
     const navigate = useNavigate();
     const [products, setProducts] = useState<Product[]>([]);
     const [isFetching, setIsFetching] = useState<boolean>(false);
@@ -98,7 +91,7 @@ const InfiniteScroll: FC<InfiniteScrollProps> = ({
         <div className={styles.infiniteScroll}>
             {!isFetching && fetchError && <p className={styles.productsPageErrorText}>{`${fetchError}... Check your connection!`}</p>}
             {!isFetching && !fetchError && products.length === 0 && <p className={styles.productsNotFoundText}>Products not found :(</p>}
-            {!isFetching && products.length > 0 && <>{children(products, onAddProductToCart)}</>}
+            {!isFetching && products.length > 0 && <>{children(products)}</>}
             {isFetching && <Loader />}
         </div>
     );
