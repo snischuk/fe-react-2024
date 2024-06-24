@@ -8,7 +8,7 @@ import IconArrowLeft from '@icons/arrow-left.svg?react';
 import IconArrowRight from '@icons/arrow-right.svg?react';
 import { SortOption } from '@interfaces/ControlPanel';
 import type { Product, ProductFilterByCategory } from '@interfaces/Product';
-import { ApiService } from '@services/fetch.service';
+import { apiService } from '@services/fetch.service';
 import { combineClasses } from '@utils/combineClasses';
 
 import styles from './Pagination.module.css';
@@ -58,9 +58,7 @@ const Pagination: FC<PaginationProps> = ({
                     search: parameters,
                 });
 
-                const responseProducts: { products: Product[]; total: number } = await ApiService.GetInstance().get(
-                    `products?${parameters}`,
-                );
+                const responseProducts: { products: Product[]; total: number } = await apiService.get(`products?${parameters}`);
 
                 setProducts(responseProducts.products);
                 setTotalPaginatonPages(Math.ceil(responseProducts.total / PRODUCTS_PER_PAGE));

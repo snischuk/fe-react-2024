@@ -21,7 +21,8 @@ const Header: FC = () => {
     const { currentCart } = useCart();
 
     const onButtonClick = (event: MouseEvent<HTMLButtonElement>) => {
-        const clickedThemeMode = (event.target as HTMLButtonElement).dataset.themeMode;
+        const clickedThemeMode = event.currentTarget.dataset.themeMode;
+
         if (clickedThemeMode) {
             setCurrentTheme(clickedThemeMode as ThemeMode);
         }

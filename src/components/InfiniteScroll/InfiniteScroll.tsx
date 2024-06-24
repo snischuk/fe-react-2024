@@ -6,7 +6,7 @@ import { Loader } from '@components/Loader/Loader';
 import { getURLSearchParameters } from '@helpers/getURLSearchParameters';
 import { SortOption } from '@interfaces/ControlPanel';
 import type { Product, ProductFilterByCategory } from '@interfaces/Product';
-import { ApiService } from '@services/fetch.service';
+import { apiService } from '@services/fetch.service';
 
 import styles from './InfiniteScroll.module.css';
 
@@ -49,9 +49,7 @@ const InfiniteScroll: FC<InfiniteScrollProps> = ({ children, inputSearch, select
                     search: parameters,
                 });
 
-                const responseProducts: { products: Product[]; total: number } = await ApiService.GetInstance().get(
-                    `products?${parameters}`,
-                );
+                const responseProducts: { products: Product[]; total: number } = await apiService.get(`products?${parameters}`);
 
                 if (isLoadMore) {
                     setProducts((previousProducts) => [...previousProducts, ...responseProducts.products]);

@@ -1,4 +1,4 @@
-export class ApiService {
+class ApiService {
     private baseURL: string;
     private static Instance: ApiService;
 
@@ -42,3 +42,5 @@ export class ApiService {
         return response.json() as Promise<T>;
     }
 }
+
+export const apiService = ApiService.GetInstance();

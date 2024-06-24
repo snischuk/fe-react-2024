@@ -3,7 +3,7 @@ import { createContext, useContext, useEffect, useState } from 'react';
 
 import { LS_KEY_THEME_MODE } from '@constants/localStorage';
 import type { ThemeMode } from '@interfaces/ThemeMode';
-import { getSystemTheme, getThemeFromLocalStarage, saveThemeToLocalStarage } from '@services/theme.service';
+import { themeService } from '@services/theme.service';
 
 interface ThemeContextProps {
     currentTheme: ThemeMode;
@@ -18,12 +18,12 @@ interface ThemeProviderProps {
 
 export const ThemeProvider: FC<ThemeProviderProps> = ({ children }) => {
     const [currentTheme, setCurrentTheme] = useState<ThemeMode>(() => {
-        const storedTheme = getThemeFromLocalStarage(LS_KEY_THEME_MODE);
-        return storedTheme || getSystemTheme();
+        const storedTheme = themeService.getThemeFromLocalStorage(LS_KEY_THEME_MODE);
+        return storedTheme || themeService.getSystemTheme();
     });
 
     useEffect(() => {
-        saveThemeToLocalStarage(LS_KEY_THEME_MODE, currentTheme);
+        themeService.saveThemeToLocalStorage(LS_KEY_THEME_MODE, currentTheme);
     }, [currentTheme]);
 
     return <ThemeContext.Provider value={{ currentTheme, setCurrentTheme }}>{children}</ThemeContext.Provider>;

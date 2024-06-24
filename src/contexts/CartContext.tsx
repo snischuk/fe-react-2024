@@ -2,7 +2,7 @@ import type { FC, ReactNode } from 'react';
 import { createContext, useContext, useEffect, useState } from 'react';
 
 import type { Product } from '@interfaces/Product';
-import { addProductToCart as addProductToCartService, getCartFromLocalStorage, saveCartToLocalStorage } from '@services/cart.service';
+import { cartService } from '@services/cart.service';
 
 interface CartContextProps {
     currentCart: Product[];
@@ -17,14 +17,14 @@ interface CartProviderProps {
 }
 
 export const CartProvider: FC<CartProviderProps> = ({ children }) => {
-    const [currentCart, setCurrentCart] = useState<Product[]>(() => getCartFromLocalStorage());
+    const [currentCart, setCurrentCart] = useState<Product[]>(() => cartService.getCartFromLocalStorage());
 
     useEffect(() => {
-        saveCartToLocalStorage(currentCart);
+        cartService.saveCartToLocalStorage(currentCart);
     }, [currentCart]);
 
     const addProductToCart = (newProduct: Product) => {
-        const updatedCart = addProductToCartService(currentCart, newProduct);
+        const updatedCart = cartService.addProductToCart(currentCart, newProduct);
         setCurrentCart(updatedCart);
     };
 

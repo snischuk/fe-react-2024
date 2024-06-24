@@ -8,7 +8,7 @@ import { ProductsList } from '@components/ProductsList/ProductsList';
 import type { SortOptionClickHandler } from '@interfaces/ControlPanel';
 import { SortOption } from '@interfaces/ControlPanel';
 import type { Product, ProductCategory, ProductFilterByCategory } from '@interfaces/Product';
-import { ApiService } from '@services/fetch.service';
+import { apiService } from '@services/fetch.service';
 import { checkIsMobileDevice } from '@utils/checkIsMobileDevice';
 
 const ProductsPage: FC = () => {
@@ -28,7 +28,7 @@ const ProductsPage: FC = () => {
 
         const fetchCategories = async () => {
             try {
-                const responseCategories: ProductCategory[] = await ApiService.GetInstance().get('categories');
+                const responseCategories: ProductCategory[] = await apiService.get('categories');
                 setCategories(responseCategories);
             } catch (error: any) {
                 console.error(error);

@@ -8,7 +8,7 @@ import IconArrowLeft from '@icons/arrow-left.svg?react';
 import IconArrowRight from '@icons/arrow-right.svg?react';
 import IconCart from '@icons/cart.svg?react';
 import type { Product } from '@interfaces/Product';
-import { ApiService } from '@services/fetch.service';
+import { apiService } from '@services/fetch.service';
 
 import styles from './ProductPage.module.css';
 
@@ -24,7 +24,7 @@ const ProductPage: FC = () => {
         const fetchProduct = async () => {
             setIsFetching(true);
             try {
-                const responseProduct: Product = await ApiService.GetInstance().get(`products/${id}`);
+                const responseProduct: Product = await apiService.get(`products/${id}`);
                 setProduct(responseProduct);
             } catch (error: any) {
                 setFetchError(error.message);
