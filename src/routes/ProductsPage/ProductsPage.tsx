@@ -1,4 +1,4 @@
-import type { FC, KeyboardEvent } from 'react';
+import type { FC } from 'react';
 import { useEffect, useRef, useState } from 'react';
 
 import { ControlPanel } from '@components/ControlPanel/ControlPanel';
@@ -27,12 +27,8 @@ const ProductsPage: FC = () => {
         setIsMobileDevice(checkIsMobileDevice());
 
         const fetchCategories = async () => {
-            try {
-                const responseCategories: ProductCategory[] = await apiService.get('categories');
-                setCategories(responseCategories);
-            } catch (error: any) {
-                console.error(error);
-            }
+            const responseCategories: ProductCategory[] = await apiService.get('categories');
+            setCategories(responseCategories);
         };
 
         fetchCategories();
@@ -49,7 +45,7 @@ const ProductsPage: FC = () => {
         setCurrentPaginationPage(1);
     };
 
-    const onSearchEnterPress = (event: KeyboardEvent<HTMLInputElement>) => {
+    const onSearchEnterPress = (event: React.KeyboardEvent<HTMLInputElement>) => {
         if (event.key === 'Enter') {
             onSearchButtonClick();
         }
@@ -64,6 +60,7 @@ const ProductsPage: FC = () => {
         setSelectedSortOption(sortOption);
         setCurrentPaginationPage(1);
     };
+
     return (
         <>
             <ControlPanel

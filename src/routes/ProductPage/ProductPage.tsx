@@ -46,7 +46,7 @@ const ProductPage: FC = () => {
     return (
         <>
             {isFetching && <Loader />}
-            {!isFetching && fetchError && <p className={styles.productPageErrorText}>{`${fetchError}... Check your connection!`}</p>}
+            {!isFetching && fetchError && <p className={styles.productPageErrorText}>Failed to fetch product. Please try again later...</p>}
             {!isFetching && !fetchError && !product && <p className={styles.productNotFoundText}>Product not found</p>}
             {!isFetching && !fetchError && product && (
                 <article className={styles.product}>

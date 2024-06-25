@@ -87,7 +87,9 @@ const InfiniteScroll: FC<InfiniteScrollProps> = ({ children, inputSearch, select
 
     return (
         <div className={styles.infiniteScroll}>
-            {!isFetching && fetchError && <p className={styles.productsPageErrorText}>{`${fetchError}... Check your connection!`}</p>}
+            {!isFetching && fetchError && (
+                <p className={styles.productsPageErrorText}>Failed to fetch products. Please try again later...</p>
+            )}
             {!isFetching && !fetchError && products.length === 0 && <p className={styles.productsNotFoundText}>Products not found :(</p>}
             {!isFetching && products.length > 0 && <>{children(products)}</>}
             {isFetching && <Loader />}
