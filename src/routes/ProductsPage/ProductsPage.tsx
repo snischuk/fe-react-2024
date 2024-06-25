@@ -1,5 +1,6 @@
 import type { FC } from 'react';
 import { useEffect, useRef, useState } from 'react';
+import { isMobile } from 'react-device-detect';
 
 import { ControlPanel } from '@components/ControlPanel/ControlPanel';
 import { InfiniteScroll } from '@components/InfiniteScroll/InfiniteScroll';
@@ -9,12 +10,9 @@ import type { SortOptionClickHandler } from '@interfaces/ControlPanel';
 import { SortOption } from '@interfaces/ControlPanel';
 import type { Product, ProductCategory, ProductFilterByCategory } from '@interfaces/Product';
 import { apiService } from '@services/fetch.service';
-import { checkIsMobileDevice } from '@utils/checkIsMobileDevice';
 
 const ProductsPage: FC = () => {
-    const [isMobileDevice, setIsMobileDevice] = useState<boolean>(true);
     const [categories, setCategories] = useState<ProductCategory[]>([]);
-
     const [currentPaginationPage, setCurrentPaginationPage] = useState<number>(1);
 
     const [selectedSortOption, setSelectedSortOption] = useState<SortOption>(SortOption.PRICE_HIGH_TO_LOW);
@@ -24,8 +22,6 @@ const ProductsPage: FC = () => {
     const searchInputReference = useRef<HTMLInputElement>(null);
 
     useEffect(() => {
-        setIsMobileDevice(checkIsMobileDevice());
-
         const fetchCategories = async () => {
             const responseCategories: ProductCategory[] = await apiService.get('categories');
             setCategories(responseCategories);
@@ -75,7 +71,7 @@ const ProductsPage: FC = () => {
             />
 
             <>
-                {isMobileDevice ? (
+                {isMobile ? (
                     <InfiniteScroll
                         inputSearch={inputSearch}
                         selectedSortOption={selectedSortOption}
