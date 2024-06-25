@@ -1,8 +1,8 @@
 import type { FC, ReactNode } from 'react';
 import { useCallback, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { PuffLoader } from 'react-spinners';
 
-import { Loader } from '@components/Loader/Loader';
 import { getURLSearchParameters } from '@helpers/getURLSearchParameters';
 import IconArrowLeft from '@icons/arrow-left.svg?react';
 import IconArrowRight from '@icons/arrow-right.svg?react';
@@ -124,7 +124,7 @@ const Pagination: FC<PaginationProps> = ({
 
     return (
         <div className={styles.paginationWrapper}>
-            {isFetching && <Loader />}
+            {isFetching && <PuffLoader color="#EF4934" cssOverride={{ top: '40%' }} />}
             {!isFetching && fetchError && (
                 <p className={styles.productsPageErrorText}>Failed to fetch products. Please try again later...</p>
             )}
