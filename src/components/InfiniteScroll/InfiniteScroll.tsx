@@ -1,8 +1,8 @@
 import type { FC, ReactNode } from 'react';
 import { useCallback, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { PuffLoader } from 'react-spinners';
 
+import { Loader } from '@components/Loader/Loader';
 import { getURLSearchParameters } from '@helpers/getURLSearchParameters';
 import { SortOption } from '@interfaces/ControlPanel';
 import type { Product, ProductFilterByCategory } from '@interfaces/Product';
@@ -92,7 +92,7 @@ const InfiniteScroll: FC<InfiniteScrollProps> = ({ children, inputSearch, select
             )}
             {!isFetching && !fetchError && products.length === 0 && <p className={styles.productsNotFoundText}>Products not found :(</p>}
             {!isFetching && products.length > 0 && <>{children(products)}</>}
-            {isFetching && <PuffLoader color="#EF4934" cssOverride={{ top: '40%' }} />}
+            {isFetching && <Loader />}
         </div>
     );
 };

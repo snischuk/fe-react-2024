@@ -1,8 +1,8 @@
 import type { FC } from 'react';
 import { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-import { PuffLoader } from 'react-spinners';
 
+import { Loader } from '@components/Loader/Loader';
 import { useCart } from '@contexts/CartContext';
 import IconArrowLeft from '@icons/arrow-left.svg?react';
 import IconArrowRight from '@icons/arrow-right.svg?react';
@@ -45,7 +45,7 @@ const ProductPage: FC = () => {
     };
     return (
         <>
-            {isFetching && <PuffLoader color="#EF4934" cssOverride={{ top: '40%' }} />}
+            {isFetching && <Loader />}
             {!isFetching && fetchError && <p className={styles.productPageErrorText}>Failed to fetch product. Please try again later...</p>}
             {!isFetching && !fetchError && !product && <p className={styles.productNotFoundText}>Product not found</p>}
             {!isFetching && !fetchError && product && (
