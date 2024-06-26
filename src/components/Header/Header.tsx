@@ -1,6 +1,8 @@
 import type { FC, MouseEvent } from 'react';
 import { Link, NavLink } from 'react-router-dom';
 
+import { useCart } from '@contexts/CartContext';
+import { useTheme } from '@contexts/ThemeContext';
 import IconCart from '@icons/cart.svg?react';
 import IconLogo from '@icons/logo.svg?react';
 import IconMenuBurger from '@icons/menu-burger.svg?react';
@@ -9,23 +11,20 @@ import IconSignup from '@icons/sign-up.svg?react';
 import IconThemeDark from '@icons/theme-mode-dark.svg?react';
 import IconThemeDivider from '@icons/theme-mode-divider.svg?react';
 import IconThemeLight from '@icons/theme-mode-light.svg?react';
-import type { Product } from '@interfaces/Product';
 import { ThemeMode } from '@interfaces/ThemeMode';
-import { combineClasses } from '@services/styles.service';
+import { combineClasses } from '@utils/combineClasses';
 
 import styles from './Header.module.css';
 
-interface HeaderProps {
-    productsInCart: Product[];
-    currentTheme: ThemeMode;
-    onThemeModeClick: (theme: ThemeMode) => void;
-}
+const Header: FC = () => {
+    const { currentTheme, setCurrentTheme } = useTheme();
+    const { currentCart } = useCart();
 
-const Header: FC<HeaderProps> = ({ productsInCart, currentTheme, onThemeModeClick }) => {
     const onButtonClick = (event: MouseEvent<HTMLButtonElement>) => {
         const clickedThemeMode = event.currentTarget.dataset.themeMode;
+
         if (clickedThemeMode) {
-            onThemeModeClick(clickedThemeMode as ThemeMode);
+            setCurrentTheme(clickedThemeMode as ThemeMode);
         }
     };
     const getThemeClassName = (themeName: ThemeMode) =>
@@ -69,7 +68,7 @@ const Header: FC<HeaderProps> = ({ productsInCart, currentTheme, onThemeModeClic
 
                 <button className={styles.headerCartBtn}>
                     <IconCart className={styles.headerCartIcon} />
-                    {productsInCart.length > 0 && <span className={styles.headerCartQuantity}>{productsInCart.length}</span>}
+                    {currentCart.length > 0 && <span className={styles.headerCartQuantity}>{currentCart.length}</span>}
                 </button>
 
                 <div className={styles.headerAuthBtns}>

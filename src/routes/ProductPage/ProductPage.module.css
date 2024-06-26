@@ -1,17 +1,20 @@
-.productLoaderText {
-  color: var(--color-text);
-  font-size: 16px;
-  line-height: 20px;
-}
-
-.productErrorText {
-  color: var(--color-text);
-  font-size: 16px;
-  line-height: 20px;
-}
-
-.productNotFoundText {
+.productPageErrorText {
   flex-grow: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 20px;
+  color: var(--color-text);
+  font-size: 16px;
+  line-height: 20px;
+}
+
+.productPageNotFoundText {
+  flex-grow: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 20px;
   color: var(--color-text);
   font-size: 16px;
   line-height: 20px;

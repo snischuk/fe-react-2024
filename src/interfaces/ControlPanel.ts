@@ -1,22 +1,10 @@
-import type { ProductCategoryName } from './Product';
+import type { ProductFilterByCategory } from './Product';
 
 export enum SortOption {
-    PRICE_HIGH_LOW = 'Price (High - Low)',
-    PRICE_LOW_HIGH = 'Price (Low - High)',
-    NEWEST = 'Newest',
-    OLDEST = 'Oldest',
+    PRICE_HIGH_TO_LOW = 'Price (High - Low)',
+    PRICE_LOW_TO_HIGH = 'Price (Low - High)',
 }
 
-export type SortOptionChangeHandler = (sortOption: SortOption) => void;
+export type SortOptionClickHandler = (sortOption: SortOption) => void;
 
-export interface SortOptionProps {
-    selectedSortOption: SortOption;
-    onSortOptionChange: SortOptionChangeHandler;
-}
-
-export type FilterByCategoryHandler = (clickedCategory: ProductCategoryName) => void;
-
-export interface FilterByCategory {
-    selectedFiltersByCategory: ProductCategoryName[];
-    onFilterByCategoryClick: FilterByCategoryHandler;
-}
+export type FilterByCategoryHandler = (clickedCategory: ProductFilterByCategory) => void;

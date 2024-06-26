@@ -1,5 +1,6 @@
 import type { FC } from 'react';
 
+import { useTheme } from '@contexts/ThemeContext';
 import { ThemeMode } from '@interfaces/ThemeMode';
 
 import aboutImageDark from '@/assets/images/about/about-main-dark.jpeg';
@@ -7,11 +8,9 @@ import aboutImageLight from '@/assets/images/about/about-main-light.jpeg';
 
 import styles from './AboutPage.module.css';
 
-interface AboutPageProps {
-    currentTheme: ThemeMode;
-}
+const AboutPage: FC = () => {
+    const { currentTheme } = useTheme();
 
-const AboutPage: FC<AboutPageProps> = ({ currentTheme }) => {
     const getImgDependOnTheme = (theme: string) => (theme === ThemeMode.LIGHT ? aboutImageLight : aboutImageDark);
 
     return (

@@ -1,116 +1,98 @@
 import type { FC } from 'react';
-import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
+import { isMobile } from 'react-device-detect';
 
 import { ControlPanel } from '@components/ControlPanel/ControlPanel';
+import { InfiniteScroll } from '@components/InfiniteScroll/InfiniteScroll';
 import { Pagination } from '@components/Pagination/Pagination';
 import { ProductsList } from '@components/ProductsList/ProductsList';
-import { BASE_URL } from '@constants/apiUrl';
-import { PRODUCTS_PER_PAGE } from '@constants/pagination';
-import { useDataFetching } from '@hooks/useDataFetching';
-import { useFilterAndSort } from '@hooks/useFilterAndSort';
-import { usePagination } from '@hooks/usePagination';
-import type { SortOptionChangeHandler } from '@interfaces/ControlPanel';
+import type { SortOptionClickHandler } from '@interfaces/ControlPanel';
 import { SortOption } from '@interfaces/ControlPanel';
-import type { AddProductToCartHandler, Product, ProductCategoryName } from '@interfaces/Product';
+import type { Product, ProductCategory, ProductFilterByCategory } from '@interfaces/Product';
+import { apiService } from '@services/fetch.service';
 
-import styles from './ProductsPage.module.css';
+const ProductsPage: FC = () => {
+    const [categories, setCategories] = useState<ProductCategory[]>([]);
+    const [currentPaginationPage, setCurrentPaginationPage] = useState<number>(1);
 
-interface ProductsPageProps {
-    onAddProductToCart: AddProductToCartHandler;
-}
-
-const ProductsPage: FC<ProductsPageProps> = ({ onAddProductToCart }) => {
-    const [searchQuery, setSearchQuery] = useState('');
-    const [selectedFiltersByCategory, setSelectedFilterByCategory] = useState<ProductCategoryName[]>([]);
-    const [selectedSortOption, setSelectedSortOption] = useState<SortOption>(SortOption.PRICE_HIGH_LOW);
-    const [products, setProducts] = useState<Product[]>([]);
+    const [selectedSortOption, setSelectedSortOption] = useState<SortOption>(SortOption.PRICE_HIGH_TO_LOW);
+    const [selectedFilterByCategory, setSelectedFilterByCategory] = useState<ProductFilterByCategory>({} as ProductFilterByCategory);
+    const [inputSearch, setInputSearch] = useState<string>('');
 
     const searchInputReference = useRef<HTMLInputElement>(null);
 
-    const parseData = useCallback((fetchedData: { products: Product[] }) => fetchedData.products, []);
-
-    const { data: fetchedProducts, isFetching, errorInfo } = useDataFetching<Product[]>({ url: BASE_URL, parseData });
-
     useEffect(() => {
-        if (fetchedProducts && fetchedProducts.length > 0) {
-            setProducts(fetchedProducts);
-        }
-    }, [fetchedProducts]);
+        const fetchCategories = async () => {
+            const responseCategories: ProductCategory[] = await apiService.get('categories');
+            setCategories(responseCategories);
+        };
 
-    const filteredAndSortedProducts = useFilterAndSort({
-        products,
-        searchQuery,
-        selectedFiltersByCategory,
-        selectedSortOption,
-    });
+        fetchCategories();
+    }, []);
 
-    const { currentPage, totalPages, onPageChange, startIndex, endIndex } = usePagination({
-        totalItems: filteredAndSortedProducts.length,
-        itemsPerPage: PRODUCTS_PER_PAGE,
-    });
-    const onSearchButtonClick = useCallback(() => {
+    const onPaginationPageChange = (page: number) => {
+        setCurrentPaginationPage(page);
+    };
+
+    const onSearchButtonClick = () => {
         if (searchInputReference.current) {
-            setSearchQuery(searchInputReference.current.value);
-            onPageChange(1);
+            setInputSearch(searchInputReference.current.value.trim());
         }
-    }, [onPageChange]);
+        setCurrentPaginationPage(1);
+    };
 
-    const onFilterByCategoryClick = useCallback(
-        (filterOption: ProductCategoryName) => {
-            setSelectedFilterByCategory((previous) => {
-                const categoryIndex = previous.indexOf(filterOption);
-                if (categoryIndex === -1) {
-                    return [...previous, filterOption];
-                } else {
-                    const updatedFilters = [...previous];
-                    updatedFilters.splice(categoryIndex, 1);
-                    return updatedFilters;
-                }
-            });
-            onPageChange(1);
-        },
-        [onPageChange],
-    );
+    const onSearchEnterPress = (event: React.KeyboardEvent<HTMLInputElement>) => {
+        if (event.key === 'Enter') {
+            onSearchButtonClick();
+        }
+    };
 
-    const onSortOptionChange: SortOptionChangeHandler = useCallback(
-        (sortOption) => {
-            setSelectedSortOption(sortOption);
-            onPageChange(1);
-        },
-        [onPageChange],
-    );
+    const onFilterByCategoryClick = (filterOption: ProductFilterByCategory) => {
+        setSelectedFilterByCategory((previousFilter) => (previousFilter === filterOption ? ({} as ProductFilterByCategory) : filterOption));
+        setCurrentPaginationPage(1);
+    };
 
-    const displayedProductsPerPage = useMemo(
-        () => filteredAndSortedProducts.slice(startIndex, endIndex),
-        [filteredAndSortedProducts, startIndex, endIndex],
-    );
+    const onSortOptionClick: SortOptionClickHandler = (sortOption) => {
+        setSelectedSortOption(sortOption);
+        setCurrentPaginationPage(1);
+    };
 
-    const renderLoader = () => <p className={styles.productsPageLoaderText}>Loading products...</p>;
-    const renderError = () => <p className={styles.productsPageErrorText}>{`${errorInfo}... Check your connection!`}</p>;
-    const renderContent = () =>
-        filteredAndSortedProducts.length === 0 ? (
-            <p className={styles.productsNotFoundText}>Products not found :(</p>
-        ) : (
+    return (
+        <>
+            <ControlPanel
+                filtersOptionsByCategory={categories}
+                selectedSortOption={selectedSortOption}
+                onSortOptionClick={onSortOptionClick}
+                selectedFilterByCategory={selectedFilterByCategory}
+                onFilterByCategoryClick={onFilterByCategoryClick}
+                searchInputReference={searchInputReference}
+                onSearchButtonClick={onSearchButtonClick}
+                onSearchEnterPress={onSearchEnterPress}
+            />
+
             <>
-                <ControlPanel
-                    selectedSortOption={selectedSortOption}
-                    onSortOptionChange={onSortOptionChange}
-                    products={products}
-                    selectedFiltersByCategory={selectedFiltersByCategory}
-                    onFilterByCategoryClick={onFilterByCategoryClick}
-                    onSearchBtnClick={onSearchButtonClick}
-                    searchInputRef={searchInputReference}
-                />
-                <ProductsList products={displayedProductsPerPage} onAddProductToCart={onAddProductToCart} />
-                <Pagination totalPages={totalPages} currentPage={currentPage} onPageChange={onPageChange} />
+                {isMobile ? (
+                    <InfiniteScroll
+                        inputSearch={inputSearch}
+                        selectedSortOption={selectedSortOption}
+                        selectedFilterByCategory={selectedFilterByCategory}
+                    >
+                        {(products: Product[]) => <ProductsList products={products} />}
+                    </InfiniteScroll>
+                ) : (
+                    <Pagination
+                        currentPaginationPage={currentPaginationPage}
+                        onPaginationPageChange={onPaginationPageChange}
+                        inputSearch={inputSearch}
+                        selectedSortOption={selectedSortOption}
+                        selectedFilterByCategory={selectedFilterByCategory}
+                    >
+                        {(products: Product[]) => <ProductsList products={products} />}
+                    </Pagination>
+                )}
             </>
-        );
-
-    if (isFetching) {
-        return renderLoader();
-    } else if (errorInfo) {
-        return renderError();
-    } else return renderContent();
+        </>
+    );
 };
 
 export { ProductsPage };
